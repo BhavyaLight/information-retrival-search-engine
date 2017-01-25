@@ -1,1 +1,2 @@
+[![Stories in Ready](https://badge.waffle.io/BhavyaLight/information-retrival-search-engine.png?label=ready&title=Ready)](https://waffle.io/BhavyaLight/information-retrival-search-engine)
 # information-retrival-search-engine
