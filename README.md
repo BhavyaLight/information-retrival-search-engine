@@ -16,3 +16,5 @@ docker build -t bhavya/information_retrival:version1 .
 docker run --publish=8001:8000 bhavya/information_retrival:version1
 ```
 Note: The django website will now be available on port 8001 instead of 8000
+
+END
