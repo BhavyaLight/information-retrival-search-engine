@@ -1,12 +1,17 @@
-## Welcome to GitHub Pages
+# Information Retrival Search Engine
 
-You can use the [editor on GitHub](https://github.com/BhavyaLight/information-retrival-search-engine/edit/gh-pages/README.md) to maintain and preview the content for your website in Markdown files.
+## Overview
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Crawling the data
 
-### Markdown
+1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+2. What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries
+
+3. The numbers of records, words, and types (i.e., unique words) in the corpus
+
+
+### Syntax for MD
 
 ```markdown
 Syntax highlighted code block
