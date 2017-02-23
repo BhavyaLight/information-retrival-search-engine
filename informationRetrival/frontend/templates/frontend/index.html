@@ -1,0 +1,14 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+{% block content %}
+  <div class="main-search">
+    <h1>Discover A Movie</h1>
+    <form>
+    <div class="form-group">
+      <label for="searchMovie">Type Movie Name</label>
+      <input type="text" class="form-control" id="searchMovie" placeholder="Enter movie name or plot">
+    </div>
+     <button type="submit" class="btn btn-default">Search</button>
+  </form>
+  </div>
+{% endblock content %}
