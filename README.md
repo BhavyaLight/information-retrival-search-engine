@@ -16,29 +16,29 @@ The Movie Db (TmDB) api was used to extract the corpus and relevant information 
  
  - **Title**  
    The title of the film. The title will be indexed along with the plot.
- - **Overview** 
+ - **Overview**  
    The plot of the film. The main text of the document.
- - **tagline** 
+ - **tagline**   
    The film 'tagline' or a catchphrase or slogan, especially as used in advertising, or the punchline of the film.
- - **runtime**
+ - **runtime**  
    The runtime of the film. This is an integer field which is not indexed. However, it is used as a stored field that is     displayed with the search results.
- - **poster_path**
+ - **poster_path**  
    The poster path of the link consists of the partial url to the film banner which can be NULL.
- - **genres**
+ - **genres**  
     The genre under which the image is categorised.  One film might be categorised under more than one genre.
- - **production_companies**
+ - **production_companies**  
     The names of all production companies releveant in the production of the film. One film might be categorised under several production houses.
- - **release_date**
+ - **release_date**  
     The official release date of a film. This might contain information of several unreleased films. Such films do not have a released date.
- - **imdb_id**
+ - **imdb_id**  
     The unique imdb id for each movie
- - **popularity**
+ - **popularity**  
     The popularity is a numeric value between 0 to 1 which corresponds to the ranking of the film according to viewer ratings
- - **revenue**
+ - **revenue**  
     The revenue of a film gives the total projected collections made by the film. It might not be available for all films.
- - **vote_average**
+ - **vote_average**  
     Gives the average vote count of the film
- - **adult**
+ - **adult**  
     A boolean value that categorizes the film's approved audience to be adult- True or False.
     
 
