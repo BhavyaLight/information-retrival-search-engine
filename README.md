@@ -14,33 +14,17 @@ The Movie data consists of numbers, dates, text, images, urls i.e. a great amalg
 1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)
 
 2. What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
-Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.
- - **Search by title**  
- _Standard Search Query_: Fear of Clowns  (exact title)    
- _Advanced search query (with support for spellcheck):_   
- Clown fear  
- Frea of Clowns  
- Fear the clown  
- _**Expected Result**_: Fear of Clowns  
- - **Search by tagline**  
- _Standard Search Query_: competitive gymnastics   
- _**Expected Result**_: Stick It  
- - **Search by plot**  
- _Standard Search Query_: murderous clowns   
- _**Expected Result**_: Fear of Clowns   
- - **Search by genre**  
- _Standard Search Query_: Crime and thriller movies  
- _**Expected Result**_: Crime and thriller movies, sorted by popularity  
- - **Search by review** (Advanced Feature)  
- _Standard Search Query_:  > 4.7 popularity, < 6.7 rating  
- _**Expected Result**_: Movies who are popular than 4.7 rating, less than 6.7 rating  
- _Advanced search query (with ambiguous popularity ratings):_ e.g. Average popularity movies  
+Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.  
 
-| Query type        | Example of basic Query       | Example of advanced Query    | Expected Result           | Details                                                                             |
-|-------------------|------------------------------|------------------------------|---------------------------|-------------------------------------------------------------------------------------|
-| Search by title   | Fear of Clowns (exact title) | Frea of Clowns (Spell check) | Movies with similar title | The result should be specific, not more than 3-5 films unless the title is a series |
-| Search by tagline |                              |                              |                           |                                                                                     |
-| Search by plot    |                              |                              |                           |                                                                                     |
+We aim to archieve the basic Query functionalities, the implementation of advanced query features is subject to our progress.  
+
+| Query type        | Example of basic Query         | Example of advanced Query                                                                                                  | Expected Result                                                 | Details                                                                                                                                                        |
+|-------------------|--------------------------------|----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Search by title   | fear of clowns (exact title)   | Frea of Clowns (Spell check)                                                                                               | Movies with similar title                                       | The result should be specific, not more than 3-5 films unless the title is a series                                                                            |
+| Search by tagline | competitive gymnastics         | competition of gymnasts (Spell check)                                                                                      | Movie with similar tagline                                      | The result should be specific, not more than 3-5 films unless the title is a series                                                                            |
+| Search by plot    | murderous clowns in circus     |                                                                                                                            | Movies with similar plot overview                               | The result can be little less specific and not limited to 3-5 films                                                                                            |
+| Search by genre   | crime and thriller movies      | movies with suspense and murder (deciding which genre the user is looking for based on classification from previous data)  | Movies under the crime and thriller genre, sorted by popularity | A good example for boolean indexing by Genre                                                                                                                   |
+| Search by review  | > 4.7 popularity, < 6.7 rating | Average popularity movies(with ambiguous popularity ratings)                                                               | Movies who are popular than 4.7 rating, less than 6.7 rating    | Try to convert user text search for a range of ratings, and display results likewise. The simple case could be to use filter, while the advanced would be NLP. |
 
 3. The numbers of records, words, and types (i.e., unique words) in the corpus
 
