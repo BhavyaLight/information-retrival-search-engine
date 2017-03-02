@@ -15,7 +15,7 @@ The Movie data consists of numbers, dates, text, images, urls i.e. a great amalg
 
 2. What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
 Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.
- - **Search by title name of movie**  
+ - **Search by title**  
  _Standard Search Query_: Fear of Clowns  (exact title)    
  _Advanced search query (with support for spellcheck):_   
  Clown fear  
@@ -35,6 +35,12 @@ Most frequenty users might want to search for a particular movie by its title an
  _Standard Search Query_:  > 4.7 popularity, < 6.7 rating  
  _**Expected Result**_: Movies who are popular than 4.7 rating, less than 6.7 rating  
  _Advanced search query (with ambiguous popularity ratings):_ e.g. Average popularity movies  
+
+| Query type        | Example of basic Query       | Example of advanced Query    | Expected Result           | Details                                                                             |
+|-------------------|------------------------------|------------------------------|---------------------------|-------------------------------------------------------------------------------------|
+| Search by title   | Fear of Clowns (exact title) | Frea of Clowns (Spell check) | Movies with similar title | The result should be specific, not more than 3-5 films unless the title is a series |
+| Search by tagline |                              |                              |                           |                                                                                     |
+| Search by plot    |                              |                              |                           |                                                                                     |
 
 3. The numbers of records, words, and types (i.e., unique words) in the corpus
 
