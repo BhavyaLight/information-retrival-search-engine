@@ -11,7 +11,23 @@ The Movie data consists of numbers, dates, text, images, urls i.e. a great amalg
 
 ## Crawling the data
 
-1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)
+1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)  
+The Movie Db (TmDB) api was used to extract the corpus and relevant information about the movies. The crawled and extracted corpus was stored in the formed of json-like text files. A single text file consists only of a single movie record with a detailed plot information. Ceratin records lacked plot information. We ignored such records during crawling as they were insignificant to the kind of information retreival system required. Each unique text file is saved with a unique id from 1 to greater than 20,000. The unique identifier for each record is the 'imdb_id' as well as the text file number in our case. We also store the following meta-data for each record:
+ - **Title**  
+   
+ - **Overview**
+ - **tagline** 
+ - **title**
+ - **runtime**
+ - **poster_path**
+ - **genres**
+ - **production_companies**
+ - **release_date**
+ - **imdb_id**
+ - **popularity**
+ - **revenue**
+ - **vote_average**
+ - **adult**
 
 2. What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
 Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.  
