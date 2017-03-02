@@ -13,7 +13,6 @@ A typical Movie data consists of title, plot description, poster, genre, date, l
 
 2. What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
 Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.
-
 - **Search by title name of movie** 
 _Standard Search Query_: Fear of Clowns  (exact title)  
 _Advanced search query (with support for spellcheck):_ 
@@ -21,21 +20,16 @@ Clown fear
 Frea of Clowns
 Fear the clown
 _**Expected Result_**: Fear of Clowns
-
 - **Search by tagline**
 _Standard Search Query_: competitive gymnastics   
 _**Expected Result_**: Stick It
-
 - **Search by plot**
 _Standard Search Query_: murderous clowns 
 _**Expected Result_**: Fear of Clowns 
-
 - **Search by genre**
 _Standard Search Query_: Crime and thriller movies
 _**Expected Result_**: Crime and thriller movies, sorted by popularity
-
-(Advanced Feature)
-- **Search by review**
+- **Search by review** (Advanced Feature)
 _Standard Search Query_:  > 4.7 popularity, < 6.7 rating
 _**Expected Result_**: Movies who are popular than 4.7 rating, less than 6.7 rating
 _Advanced search query (with ambiguous popularity ratings):_ e.g. Average popularity movies
