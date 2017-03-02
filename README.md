@@ -21,19 +21,19 @@ Most frequenty users might want to search for a particular movie by its title an
  Clown fear  
  Frea of Clowns  
  Fear the clown  
- _**Expected Result_**: Fear of Clowns  
+ _**Expected Result**_: Fear of Clowns  
  - **Search by tagline**  
  _Standard Search Query_: competitive gymnastics   
- _**Expected Result_**: Stick It  
+ _**Expected Result**_: Stick It  
  - **Search by plot**  
  _Standard Search Query_: murderous clowns   
- _**Expected Result_**: Fear of Clowns   
+ _**Expected Result**_: Fear of Clowns   
  - **Search by genre**  
  _Standard Search Query_: Crime and thriller movies  
- _**Expected Result_**: Crime and thriller movies, sorted by popularity  
+ _**Expected Result**_: Crime and thriller movies, sorted by popularity  
  - **Search by review** (Advanced Feature)  
  _Standard Search Query_:  > 4.7 popularity, < 6.7 rating  
- _**Expected Result_**: Movies who are popular than 4.7 rating, less than 6.7 rating  
+ _**Expected Result**_: Movies who are popular than 4.7 rating, less than 6.7 rating  
  _Advanced search query (with ambiguous popularity ratings):_ e.g. Average popularity movies  
 
 3. The numbers of records, words, and types (i.e., unique words) in the corpus
