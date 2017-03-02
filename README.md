@@ -12,22 +12,35 @@ The Movie data consists of numbers, dates, text, images, urls i.e. a great amalg
 ## Crawling the data
 
 1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)  
-The Movie Db (TmDB) api was used to extract the corpus and relevant information about the movies. The crawled and extracted corpus was stored in the formed of json-like text files. A single text file consists only of a single movie record with a detailed plot information. Ceratin records lacked plot information. We ignored such records during crawling as they were insignificant to the kind of information retreival system required. Each unique text file is saved with a unique id from 1 to greater than 20,000. The unique identifier for each record is the 'imdb_id' as well as the text file number in our case. We also store the following meta-data for each record:
+The Movie Db (TmDB) api was used to extract the corpus and relevant information about the movies. The crawled and extracted corpus was stored in the formed of json-like text files. A single document consists of a text file with a single movie record containing the detailed plot information. During crawling, it was observed that ceratin records from the api call lacked plot information. We ignored such records during crawling as they were insignificant to the kind of information retreival system required. Each unique text fil.e is saved with a unique id from 1 to greater than 20,000. The unique identifier for each record is the 'imdb_id' as well as the text file number in our case. While the api returns a lot of information, we only store the following meta-data for each record:
+ 
  - **Title**  
-   
- - **Overview**
+   The title of the film. The title will be indexed along with the plot.
+ - **Overview** 
+   The plot of the film. The main text of the document.
  - **tagline** 
- - **title**
+   The film 'tagline' or a catchphrase or slogan, especially as used in advertising, or the punchline of the film.
  - **runtime**
+   The runtime of the film. This is an integer field which is not indexed. However, it is used as a stored field that is     displayed with the search results.
  - **poster_path**
+   The poster path of the link consists of the partial url to the film banner which can be NULL.
  - **genres**
+    The genre under which the image is categorised.  One film might be categorised under more than one genre.
  - **production_companies**
+    The names of all production companies releveant in the production of the film. One film might be categorised under several production houses.
  - **release_date**
+    The official release date of a film. This might contain information of several unreleased films. Such films do not have a released date.
  - **imdb_id**
+    The unique imdb id for each movie
  - **popularity**
+    The popularity is a numeric value between 0 to 1 which corresponds to the ranking of the film according to viewer ratings
  - **revenue**
+    The revenue of a film gives the total projected collections made by the film. It might not be available for all films.
  - **vote_average**
+    Gives the average vote count of the film
  - **adult**
+    A boolean value that categorizes the film's approved audience to be adult- True or False.
+    
 
 2. What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
 Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.  
