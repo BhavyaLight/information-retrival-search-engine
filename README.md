@@ -9,7 +9,7 @@ A typical Movie data consists of title, plot description, poster, genre, date, l
 The Movie data consists of numbers, dates, text, images, urls i.e. a great amalgamation of datafor trying different techniques taught in the information retreival course. Thus, we felt the dataset provided enough diversity to learn something new.
 
 
-### Crawling the data
+## Crawling the data
 
 1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)
 
