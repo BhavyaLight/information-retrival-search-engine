@@ -2,6 +2,11 @@
 
 ## Overview
 
+The information retrieval search engine built by our team is based on Movies, the data for which has been obtained by the TMDB api. Our motivation for picking the above in order to build an information retrieval system is influenced by two main factors:  
+- **Availability of information** 
+
+- **Opportunity to learn**
+
 ### Crawling the data
 
 1. How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)
