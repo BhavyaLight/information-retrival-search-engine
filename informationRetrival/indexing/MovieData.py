@@ -19,7 +19,7 @@ class MovieData:
         try:
             return ast.literal_eval(open(source, mode='r').read())
         except Exception as err:
-            print "Improper file syntax: ",source
+            print ("Improper file syntax: "+source)
             return None
 
     def get(self, name_of_field):
