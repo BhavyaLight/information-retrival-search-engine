@@ -13,7 +13,7 @@ The Movie data consists of numbers, dates, text, images, urls i.e. a great amalg
 
 ### Question 1
 
-### 1.1  How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)  #
+#### 1.1  How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)  #
 The Movie Db (TmDB) api was used to extract the corpus and relevant information about the movies. The crawled and extracted corpus was stored in the formed of json-like text files. A single document consists of a text file with a single movie record containing the detailed plot information. During crawling, it was observed that ceratin records from the api call lacked plot information. We ignored such records during crawling as they were insignificant to the kind of information retreival system required. Each unique text fil.e is saved with a unique id from 1 to greater than 20,000. The unique identifier for each record is the 'imdb_id' as well as the text file number in our case. While the api returns a lot of information, we only store the following meta-data for each record:
  
  - **Title**  
