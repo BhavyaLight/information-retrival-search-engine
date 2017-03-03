@@ -60,13 +60,31 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 #### 1.3  The numbers of records, words, and types (i.e., unique words) in the corpus
 
 ## Indexing and querying
-The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene.   - -- Firstly, Whoosh is a python library which is the same as the rest of our project environment. The crawling task was done in python, as well as the website was developed in Django.
+```
+The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene.  
+- Firstly, Whoosh is a python library which is the same as the rest of our project environment. The crawling task was done in python, as well as the website was developed in Django.
 - Secondly, it's simplicity and elegance at handling indexing, querying and ranking.
 
 The trade-off with Whoosh vs. Solr+Lucene is the speed in case the number of documents are large. However, for around 20K records, the speed difference is insignificant. As a result, Whoosh was used for Indexing, Querying and Ranking of documents.
-
+```
 ### 1. Indexing
 
+- _Basic Indexing_  
+The initial indexing was done with Stemming Analysis. The text was first tokenised and converted to lowercase, also changing them to their root form. For example,
+```python
+from whoosh.analysis import RegexTokenizer
+rext = RegexTokenizer()
+indexed = rext(u"This text is beautifully indexed")
+stemmer = StemFilter()
+print ([token.text for token in stemmer(stream)])
+['Thi', 'text', 'is', 'beautifulli', 'index']
+```
+Stemming has pros and cons:
+It allows the user to find documents without worrying about word forms.
+It reduces the size of the index, since it reduces the number of separate terms indexed by “collapsing” multiple word forms into a single base word.
+It’s faster than using variations (see below)
+The stemming algorithm can sometimes incorrectly conflate words or change the meaning of a word by removing suffixes.
+The stemmed forms are often not proper words, so the terms in the field are not useful for things like creating a spelling dictionary.
 
 ### 2. Querying
 
