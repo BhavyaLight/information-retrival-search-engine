@@ -1,5 +1,8 @@
 # Information Retrival Search Engine
 
+## Quick-index to assignment questions
+* [Question 1](#-Question-1)
+
 ## Overview
 
 The information retrieval search engine built by our team is based on Movies, the data for which has been obtained by the TMDB api. Our motivation for picking the above in order to build an information retrieval system is influenced by two main factors: 
