@@ -5,6 +5,10 @@
   * [How you crawled the corpus?](#question-11)
   * [what kind of information users would like to retreive?](#question-12)
   * [The numbers of records, words, and types (i.e., unique words) in the corpus](#question-13)
+* [Question 2](#question-2)
+  * [Build a simple web interface](#build-a-simple-web-interface-for-the-search-engine-eg-google)
+  * [](#question-12)
+  * [](#question-13)
 
 ## Overview
 
@@ -157,11 +161,15 @@ The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring doc
 
 ### Question 2: Perform the following tasks:  
 
+#### Question 2.1  
 #### Build a simple Web interface for the search engine (e.g., Google)  
 - [] To-be-filled by Noopur Jain   
 
+#### Question 2.2
 #### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)  
 [To-do]  
+
+#### Question 2.3
 #### Write five queries, get their results, and measure the speed of the querying  
 
 | Query                           | Field searched | Total results | Total time | Top results                                                                                                                                    |
