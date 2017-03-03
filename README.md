@@ -88,12 +88,14 @@ The following were the disadvantages of stemming:
 - The stemming algorithm can sometimes incorrectly inflate words by removing suffixes
 - Since the stemmed forms are often not proper words, so the index cannot be used as a dictionary
 
+** Summary **  
+
 | Index field          | Total index space | Average query speed | Average number of query results |
 |----------------------|-------------------|---------------------|---------------------------------|
 | Overview             | 37683             | 30.1025 ms          | 767                             |
 | Title                | 12585             | 22.9966 ms          | 119                             |
 | Tagline              | 6288              | 25.3580 ms          | 347                             |
-| Production companies | 9538              | 41.0359 ms         | 700                             |
+| Production companies | 9538              | 41.0359 ms          | 700                             |
 | Genres               | 22                | 43.7500 ms          | 162                             |
 
 ### 2. Querying
