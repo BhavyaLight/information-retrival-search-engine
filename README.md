@@ -72,11 +72,12 @@ The trade-off with Whoosh vs. Solr+Lucene is the speed in case the number of doc
 
 ### 1. Indexing
 
-- _Basic Indexing_  
+- _Basic Indexing of both document and query_  
 The initial indexing was done by simple tokenization of text followed by conversion to lowercase. However, this included indexing of every word as it is. This meant different variants of a word would be considered different tokens and indexed likewise. However, this was not effecient because when a user searched for the term 'murder' he or she maybe talking about 'murderous' or 'murderly' etc. The basic indexing method limited our text search.
 
-- _Stemming Analysis_
+- _Stemming Analysis of both document and query_
 The search was able to improve with the help of Stemming Analysis. The text was first tokenised and converted to lowercase, also changing them to their root form. 
+
 _Both the query and documents were stemmed_  
 
 For example,
@@ -109,61 +110,51 @@ The results of normal tokenization vs stemming analysis were calculated based on
 | Production companies | 9538                            | 10035                              | 28.4068 ms                        | 22.1769 ms                           | 722                                           | 718                                              |
 | Genres               | 22                              | 22                                 | 44.924 ms                         | 50.3830 ms                           | 135                                           | 135                                              |
 
+- _Basic indexing of document and variation of query_  
+Since the timing for retrival of words from basic index is faster, another approach was tried that involved basic indexing of all the words but expansion of the user search query. This provided a middle path between index and user search in terms of timing. For example,  
+| Index field          | Total index space with stemming | Total index space without stemming | Average query speed with stemming | Average query speed without stemming | Average number of query results with stemming | Average number of query results without stemming |
+|----------------------|---------------------------------|------------------------------------|-----------------------------------|--------------------------------------|-----------------------------------------------|--------------------------------------------------|
+| Overview             | 37683                           | 49938                              | 30.1025 ms                        | 22.5827 ms                           | 767                                           | 413                                              |
+| Title                | 12585                           | 14401                              | 22.9966 ms                        | 19.0061 ms                           | 119                                           | 101                                              |
+| Tagline              | 6288                            | 8122                               | 25.3580 ms                        | 24.0190 ms                           | 154                                           | 128                                              |
+| Production companies | 9538                            | 10035                              | 28.4068 ms                        | 22.1769 ms                           | 722                                           | 718                                              |
+| Genres               | 22                              | 22                                 | 44.924 ms                         | 50.3830 ms                           | 135                                           | 135                                              |
+
+After analysis, it was clear than the stemming analyser was faster for most query and gave nearly similar results. Thus, in the end the indexing was done with Stemming analysis.
+
 ### 2. Querying
+
+The Querying is a simple user-input that returns the best matched results. To provide best user-experience, the following querying features were implemented:  
+
+1. _Automatic spell-correction_: The user query undergoes automatic spell correction in case the query contains words not present in the reverse-index.  
+[Future-Update-Under-Implementation] The query will also provide user interactivity to pick from a list of corrected spelling of misspelt words.  
+2. _Query term highlighting_: [Under-construction] The returned result text contains the highlighted original query term(s) by making them bold to enhance user interaction.
+3. _Query by different fields_: Currently, in order to query by different fields such as 'Title' or 'Overview', different radio button is required to be selected in the UI since each field is indexed seperately.
+[Advanced] Improve the user search experience such that it is not required to chose the field. The following options are available in order to archieve this:-  
+- Merge results from different searches of each field  
+Pro's: Easy to implement  
+Con's: Increases time, ranking on merging from different field difficult to pinpoint
+- Make one index for all text fields instead of several
+Pro's: Easy to implement
+Con's: Possibly increase time due to increase in size of index
+
 
 ### 3. Ranking
 
-``` 
-### 1 
+The ranking of the documents is based on the `TF_IDF` values of both the query and the document terms. The simple formula that has been used is:  
 
+`TF(t) = (Number of times term t appears in a document) / (Total number of terms in the document).`
 
+`IDF(t) = log_e(Total number of documents / Number of documents with term t in it)`  
 
+The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring document relevance. However, `TF_IDF` was used in the end because of its does not calculate score simply based on the probabilistic occurance of a term in a document but also considers the frequency of a word in the entire document.  
 
+### Question 2: Perform the following tasks:
+#### Build a simple Web interface for the search engine (e.g., Google)
+- [] To-be-filled by Noopur Jain
+#### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)
+[To-do]
+#### Write five queries, get their results, and measure the speed of the querying
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Syntax for MD
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BhavyaLight/information-retrival-search-engine/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
