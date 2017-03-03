@@ -13,7 +13,7 @@ The Movie data consists of numbers, dates, text, images, urls i.e. a great amalg
 
 ### Question 1
 
-#### 1.1  How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)  #
+#### Question 1.1  How you crawled the corpus (e.g., source, keywords, API, library) and stored them (e.g., whether a record corresponds to a file or a line, meta information like publication date, author name, record ID)  #
 The Movie Db (TmDB) api was used to extract the corpus and relevant information about the movies. The crawled and extracted corpus was stored in the formed of json-like text files. A single document consists of a text file with a single movie record containing the detailed plot information. During crawling, it was observed that ceratin records from the api call lacked plot information. We ignored such records during crawling as they were insignificant to the kind of information retreival system required. Each unique text fil.e is saved with a unique id from 1 to greater than 20,000. The unique identifier for each record is the 'imdb_id' as well as the text file number in our case. While the api returns a lot of information, we only store the following meta-data for each record:
  
  - **Title**  
@@ -44,7 +44,7 @@ The Movie Db (TmDB) api was used to extract the corpus and relevant information 
     A boolean value that categorizes the film's approved audience to be adult- True or False.
     
 
-#### 1.2  What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
+#### Question 1.2  What kind of information users might like to retrieve from your crawled corpus (i.e., applications), with example queries  
 Most frequenty users might want to search for a particular movie by its title and find out it's information such as rating, popularity, plot, genre by searching for the main title. The users may also like to recollect the title of some movie by typing in the plot or tagline. Thus, we would like to support both kinds of searches. Furthermore, users might want to search for a list of movies by one or more movie genre and decide to watch the most popular movie in that segment.  
 
 We aim to archieve the basic Query functionalities, the implementation of advanced query features is subject to our progress.  
@@ -57,16 +57,16 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 | Search by genre   | crime and thriller movies      | movies with suspense and murder (deciding which genre the user is looking for based on classification from previous data)  | Movies under the crime and thriller genre, sorted by popularity | A good example for boolean indexing by Genre                                                                                                                   |
 | Search by review  | > 4.7 popularity, < 6.7 rating | Average popularity movies(with ambiguous popularity ratings)                                                               | Movies who are popular than 4.7 rating, less than 6.7 rating    | Try to convert user text search for a range of ratings, and display results likewise. The simple case could be to use filter, while the advanced would be NLP. |
 
-#### 1.3  The numbers of records, words, and types (i.e., unique words) in the corpus
+#### Question 1.3  The numbers of records, words, and types (i.e., unique words) in the corpus
 
 ## Indexing and querying
-```
+
 The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene.  
 - Firstly, Whoosh is a python library which is the same as the rest of our project environment. The crawling task was done in python, as well as the website was developed in Django.
 - Secondly, it's simplicity and elegance at handling indexing, querying and ranking.
 
 The trade-off with Whoosh vs. Solr+Lucene is the speed in case the number of documents are large. However, for around 20K records, the speed difference is insignificant. As a result, Whoosh was used for Indexing, Querying and Ranking of documents.
-```
+
 ### 1. Indexing
 
 - _Basic Indexing_  
@@ -79,12 +79,22 @@ stemmer = StemFilter()
 print ([token.text for token in stemmer(stream)])
 ['Thi', 'text', 'is', 'beautifulli', 'index']
 ```
-Stemming has pros and cons:
-It allows the user to find documents without worrying about word forms.
-It reduces the size of the index, since it reduces the number of separate terms indexed by “collapsing” multiple word forms into a single base word.
-It’s faster than using variations (see below)
-The stemming algorithm can sometimes incorrectly conflate words or change the meaning of a word by removing suffixes.
-The stemmed forms are often not proper words, so the terms in the field are not useful for things like creating a spelling dictionary.
+Stemming provides the following benefits:  
+- Reduced index size
+- Increased Querying Speed
+- Allows users to find documents without worrying about word forms
+
+The following were the disadvantages of stemming:
+- The stemming algorithm can sometimes incorrectly inflate words by removing suffixes
+- Since the stemmed forms are often not proper words, so the index cannot be used as a dictionary
+
+| Index field          | Total index space | Average query speed | Average number of query results |
+|----------------------|-------------------|---------------------|---------------------------------|
+| Overview             | 37683             | 30.1025 ms          | 767                             |
+| Title                | 12585             | 22.9966 ms          | 119                             |
+| Tagline              | 6288              | 25.3580 ms          | 347                             |
+| Production companies | 9538              | 41.0359 ms         | 700                             |
+| Genres               | 22                | 43.7500 ms          | 162                             |
 
 ### 2. Querying
 
