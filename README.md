@@ -150,8 +150,10 @@ The ranking of the documents is based on the `TF_IDF` values of both the query a
 The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring document relevance. However, `TF_IDF` was used in the end because of its does not calculate score simply based on the probabilistic occurance of a term in a document but also considers the frequency of a word in the entire document.  
 
 ### Question 2: Perform the following tasks:  
+
 #### Build a simple Web interface for the search engine (e.g., Google)  
-- [] To-be-filled by Noopur Jain  
+- [] To-be-filled by Noopur Jain   
+
 #### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)  
 [To-do]  
 #### Write five queries, get their results, and measure the speed of the querying  
