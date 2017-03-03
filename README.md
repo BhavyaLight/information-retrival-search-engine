@@ -111,14 +111,8 @@ The results of normal tokenization vs stemming analysis were calculated based on
 | Genres               | 22                              | 22                                 | 44.924 ms                         | 50.3830 ms                           | 135                                           | 135                                              |
 
 - _Basic indexing of document and variation of query_  
-Since the timing for retrival of words from basic index is faster, another approach was tried that involved basic indexing of all the words but expansion of the user search query. This provided a middle path between index and user search in terms of timing. For example,  
-| Index field          | Total index space with stemming | Total index space without stemming | Average query speed with stemming | Average query speed without stemming | Average number of query results with stemming | Average number of query results without stemming |
-|----------------------|---------------------------------|------------------------------------|-----------------------------------|--------------------------------------|-----------------------------------------------|--------------------------------------------------|
-| Overview             | 37683                           | 49938                              | 30.1025 ms                        | 22.5827 ms                           | 767                                           | 413                                              |
-| Title                | 12585                           | 14401                              | 22.9966 ms                        | 19.0061 ms                           | 119                                           | 101                                              |
-| Tagline              | 6288                            | 8122                               | 25.3580 ms                        | 24.0190 ms                           | 154                                           | 128                                              |
-| Production companies | 9538                            | 10035                              | 28.4068 ms                        | 22.1769 ms                           | 722                                           | 718                                              |
-| Genres               | 22                              | 22                                 | 44.924 ms                         | 50.3830 ms                           | 135                                           | 135                                              |
+Since the timing for retrival of words from basic index is faster, another approach was tried that involved basic indexing of all the words but expansion of the user search query. This provided a middle path between index and user search in terms of timing. For example, 
+
 
 After analysis, it was clear than the stemming analyser was faster for most query and gave nearly similar results. Thus, in the end the indexing was done with Stemming analysis.
 
@@ -149,12 +143,19 @@ The ranking of the documents is based on the `TF_IDF` values of both the query a
 
 The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring document relevance. However, `TF_IDF` was used in the end because of its does not calculate score simply based on the probabilistic occurance of a term in a document but also considers the frequency of a word in the entire document.  
 
-### Question 2: Perform the following tasks:
-#### Build a simple Web interface for the search engine (e.g., Google)
-- [] To-be-filled by Noopur Jain
-#### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)
-[To-do]
-#### Write five queries, get their results, and measure the speed of the querying
+### Question 2: Perform the following tasks:  
+#### Build a simple Web interface for the search engine (e.g., Google)  
+- [] To-be-filled by Noopur Jain  
+#### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)  
+[To-do]  
+#### Write five queries, get their results, and measure the speed of the querying  
 
+| Query                           | Field searched | Total results | Total time | Top results                                                                                                                                    |
+|---------------------------------|----------------|---------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| murderous clowns                | overview       | 6             | 27.53 ms   | Fear of Clowns Der Clown - Tag der Vergeltung Clownhouse Camp Blood 2 Satan's Storybook                                                        |
+| love travel                     | overview       | 61            | 28.79 ms   | Kyun...! Ho Gaya Na The Tiger and the Snow Ship of Fools Transformations Look at Me with Pornographic Eyes                                     |
+| blood                           | tagline        | 53            | 30.93 ms   | Dillinger Sleepers Flaming Frontier Straight to Hell Bound by Honor                                                                            |
+| when in Rome                    | title          | 5             | 23.08 ms   | Tony Rome The Fall of Rome The Hidden History of Rome When in Rome Rome, Open City                                                             |
+| criminal and horror and mystery | genres         | 40            | 344.47 ms  | (Spell check)Did you mean: crime and horror and mystery The Murders in the Rue Morgue Blue Velvet Close Your Eyes Not Forgotten The Seamstress |
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
