@@ -1,7 +1,7 @@
 # Information Retrival Search Engine
 
 ## Quick-index to assignment questions
-* [Question 1](#-Question-1)
+* [Question 1](#Question-1)
 
 ## Overview
 
