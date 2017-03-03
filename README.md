@@ -60,8 +60,9 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 #### 1.3  The numbers of records, words, and types (i.e., unique words) in the corpus
 
 ## Indexing and querying
-The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene. Firstly, Whoosh is a python library which is the same as the rest of our project environment. The crawling task was done in python, as well as the website was developed in Django.
-Secondly, it's simplicity and elegance at handling indexing, querying and ranking.
+The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene.   - -- Firstly, Whoosh is a python library which is the same as the rest of our project environment. The crawling task was done in python, as well as the website was developed in Django.
+- Secondly, it's simplicity and elegance at handling indexing, querying and ranking.
+
 The trade-off with Whoosh vs. Solr+Lucene is the speed in case the number of documents are large. However, for around 20K records, the speed difference is insignificant. As a result, Whoosh was used for Indexing, Querying and Ranking of documents.
 
 ### 1. Indexing
