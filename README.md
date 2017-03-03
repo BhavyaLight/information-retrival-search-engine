@@ -6,9 +6,9 @@
   * [what kind of information users would like to retreive?](#question-12)
   * [The numbers of records, words, and types (i.e., unique words) in the corpus](#question-13)
 * [Question 2](#question-2)
-  * [Build a simple web interface](#build-a-simple-web-interface-for-the-search-engine-eg-google)
-  * [](#question-12)
-  * [](#question-13)
+  * [Build a simple web interface](#question-21)
+  * [A simple UI for crawling and incremental indexing of new data](#question-22)
+  * [Example of 5 queries](#question-23)
 
 ## Overview
 
