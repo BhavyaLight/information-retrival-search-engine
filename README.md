@@ -1,7 +1,6 @@
 # Information Retrival Search Engine
 
 ## Quick-index to assignment questions
-_Note: The report contains several other detailed explaination of why we chose which kind of options for our information retirival system. The question links are only for quick reference to ensure completeness of assignment._
 
 * [Question 1](#question-1)
   * [How you crawled the corpus?](#question-11)
@@ -11,6 +10,8 @@ _Note: The report contains several other detailed explaination of why we chose w
   * [Build a simple web interface](#question-21)
   * [A simple UI for crawling and incremental indexing of new data](#question-22)
   * [Example of 5 queries](#question-23)
+
+_Note: The report contains detailed documentation the information retirival system built besides the above questions. The question links are only for quick reference to ensure completeness of assignment. Please go through the whole document_
 
 ## Overview
 
