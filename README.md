@@ -1,7 +1,10 @@
 # Information Retrival Search Engine
 
 ## Quick-index to assignment questions
-* [Question 1](#Question-1)
+* [Question 1](#question-1)
+  * [How you crawled the corpus?](#question-11)
+  * [what kind of information users would like to retreive?](#question-12)
+  * [The numbers of records, words, and types (i.e., unique words) in the corpus](#question-13)
 
 ## Overview
 
