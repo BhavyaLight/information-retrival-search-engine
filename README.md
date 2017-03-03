@@ -9,7 +9,7 @@ A typical Movie data consists of title, plot description, poster, genre, date, l
 The Movie data consists of numbers, dates, text, images, urls i.e. a great amalgamation of datafor trying different techniques taught in the information retreival course. Thus, we felt the dataset provided enough diversity to learn something new.
 
 
-## Crawling the data
+## 1 Crawling the data
 
 ### Question 1
 
@@ -62,7 +62,7 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 #### Question 1.3  
 #### The numbers of records, words, and types (i.e., unique words) in the corpus
 
-## Indexing and querying
+## 2 Indexing and querying
 
 The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene.  
 - Firstly, Whoosh is a python library which is the same as the rest of our project environment. The crawling task was done in python, as well as the website was developed in Django.
@@ -73,7 +73,12 @@ The trade-off with Whoosh vs. Solr+Lucene is the speed in case the number of doc
 ### 1. Indexing
 
 - _Basic Indexing_  
-The initial indexing was done with Stemming Analysis. The text was first tokenised and converted to lowercase, also changing them to their root form. For example,
+The initial indexing was done by simple tokenization of text followed by conversion to lowercase. However, this included indexing of every word as it is. This meant different variants of a word would be considered different tokens and indexed likewise. However, this was not effecient because when a user searched for the term 'murder' he or she maybe talking about 'murderous' or 'murderly' etc. The basic indexing method limited our text search.
+
+- _Stemming Analysis_
+The search was able to improve with the help of Stemming Analysis. The text was first tokenised and converted to lowercase, also changing them to their root form. 
+_Both the query and documents were stemmed_
+For example,
 ```python
 from whoosh.analysis import RegexTokenizer
 rext = RegexTokenizer()
@@ -89,17 +94,19 @@ Stemming provides the following benefits:
 
 The following were the disadvantages of stemming:
 - The stemming algorithm can sometimes incorrectly inflate words by removing suffixes
-- Since the stemmed forms are often not proper words, so the index cannot be used as a dictionary
+- Since the stemmed forms are often not proper words, so the index cannot be used as a dictionary  
 
-**Summary**
+The results of normal tokenization vs stemming analysis were calculated based on certain set queries. The table below shows that stemming greatly helps reduce the size of index. The runtime however, is faster for indexes that have not been stemmed particularly because not all versions of a words need to be searched. However, the trade off is not large and the efficiency of the former case is more desireable.
 
-| Index field          | Total index space | Average query speed | Average number of query results |
-|----------------------|-------------------|---------------------|---------------------------------|
-| Overview             | 37683             | 30.1025 ms          | 767                             |
-| Title                | 12585             | 22.9966 ms          | 119                             |
-| Tagline              | 6288              | 25.3580 ms          | 347                             |
-| Production companies | 9538              | 41.0359 ms          | 700                             |
-| Genres               | 22                | 43.7500 ms          | 162                             |
+** Table 2.1 Summary of stemming analysis**
+
+| Index field          | Total index space with stemming | Total index space without stemming | Average query speed with stemming | Average query speed without stemming | Average number of query results with stemming | Average number of query results without stemming |
+|----------------------|---------------------------------|------------------------------------|-----------------------------------|--------------------------------------|-----------------------------------------------|--------------------------------------------------|
+| Overview             | 37683                           | 49938                              | 30.1025 ms                        | 22.5827 ms                           | 767                                           | 413                                              |
+| Title                | 12585                           | 14401                              | 22.9966 ms                        | 19.0061 ms                           | 119                                           | 101                                              |
+| Tagline              | 6288                            | 8122                               | 25.3580 ms                        | 24.0190 ms                           | 154                                           | 128                                              |
+| Production companies | 9538                            | 10035                              | 28.4068 ms                        | 22.1769 ms                           | 722                                           | 718                                              |
+| Genres               | 22                              | 22                                 | 44.924 ms                         | 50.3830 ms                           | 135                                           | 135                                              |
 
 ### 2. Querying
 
