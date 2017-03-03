@@ -152,10 +152,10 @@ The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring doc
 
 | Query                           | Field searched | Total results | Total time | Top results                                                                                                                                    |
 |---------------------------------|----------------|---------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| murderous clowns                | overview       | 6             | 27.53 ms   | Fear of Clowns Der Clown - Tag der Vergeltung Clownhouse Camp Blood 2 Satan's Storybook                                                        |
-| love travel                     | overview       | 61            | 28.79 ms   | Kyun...! Ho Gaya Na The Tiger and the Snow Ship of Fools Transformations Look at Me with Pornographic Eyes                                     |
-| blood                           | tagline        | 53            | 30.93 ms   | Dillinger Sleepers Flaming Frontier Straight to Hell Bound by Honor                                                                            |
-| when in Rome                    | title          | 5             | 23.08 ms   | Tony Rome The Fall of Rome The Hidden History of Rome When in Rome Rome, Open City                                                             |
-| criminal and horror and mystery | genres         | 40            | 344.47 ms  | (Spell check)Did you mean: crime and horror and mystery The Murders in the Rue Morgue Blue Velvet Close Your Eyes Not Forgotten The Seamstress |
+| murderous clowns                | overview       | 6             | 27.53 ms   | Fear of Clowns, Der Clown - Tag der Vergeltung, Clownhouse, Camp Blood 2, Satan's Storybook                                                        |
+| love travel                     | overview       | 61            | 28.79 ms   | Kyun...! Ho Gaya Na, The Tiger and the Snow,  Ship of Fools, Transformations, Look at Me with Pornographic Eyes                                     |
+| blood                           | tagline        | 53            | 30.93 ms   | Dillinger, Sleepers, Flaming Frontier, Straight to Hell, Bound by Honor                                                                            |
+| when in Rome                    | title          | 5             | 23.08 ms   | Tony Rome, The Fall of Rome, The Hidden History of Rome, When in Rome Rome, Open City                                                             |
+| criminal and horror and mystery | genres         | 40            | 344.47 ms  | `(Spell check)Did you mean: crime and horror and mystery` The Murders in the Rue, Morgue Blue Velvet, Close Your Eyes, Not Forgotten, The Seamstress |
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
