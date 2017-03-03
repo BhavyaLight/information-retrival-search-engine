@@ -77,7 +77,8 @@ The initial indexing was done by simple tokenization of text followed by convers
 
 - _Stemming Analysis_
 The search was able to improve with the help of Stemming Analysis. The text was first tokenised and converted to lowercase, also changing them to their root form. 
-_Both the query and documents were stemmed_
+_Both the query and documents were stemmed_  
+
 For example,
 ```python
 from whoosh.analysis import RegexTokenizer
@@ -94,11 +95,11 @@ Stemming provides the following benefits:
 
 The following were the disadvantages of stemming:
 - The stemming algorithm can sometimes incorrectly inflate words by removing suffixes
-- Since the stemmed forms are often not proper words, so the index cannot be used as a dictionary  
+- Since the stemmed forms are often not proper words, so the index cannot be used as a dictionary    
+  
+The results of normal tokenization vs stemming analysis were calculated based on certain set queries. The table below shows that stemming greatly helps reduce the size of index. The runtime however, is faster for indexes that have not been stemmed particularly because not all versions of a words need to be searched. However, the trade off is not large and the efficiency of the former case is more desireable.  
 
-The results of normal tokenization vs stemming analysis were calculated based on certain set queries. The table below shows that stemming greatly helps reduce the size of index. The runtime however, is faster for indexes that have not been stemmed particularly because not all versions of a words need to be searched. However, the trade off is not large and the efficiency of the former case is more desireable.
-
-** Table 2.1 Summary of stemming analysis**
+**Table 2.1 Summary of stemming analysis**
 
 | Index field          | Total index space with stemming | Total index space without stemming | Average query speed with stemming | Average query speed without stemming | Average number of query results with stemming | Average number of query results without stemming |
 |----------------------|---------------------------------|------------------------------------|-----------------------------------|--------------------------------------|-----------------------------------------------|--------------------------------------------------|
