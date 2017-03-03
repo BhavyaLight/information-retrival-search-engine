@@ -133,32 +133,29 @@ class Indexing:
         print("Document added")
 
 
-# def start_indexing(index_file, document_path, no_directory, new_index):
-#     if new_index:
-#         print("Creating a new index...")
-#         index_obj = Indexing(index_file, True)
-#     else:
-#         print("Opening previous index...")
-#         index_obj = Indexing(index_file, False)
-#
-#     if no_directory:
-#         print("Indexing files from directory...")
-#         index_obj.write_index(document_path, LIST_OF_FIELDS)
-#     else:
-#         print("Writing single file...")
-#         index_obj.write_single_index(document_path, LIST_OF_FIELDS)
+def start_indexing(index_file, document_path, no_directory, new_index):
+    if new_index:
+        print("Creating a new index...")
+        index_obj = Indexing(index_file, True)
+    else:
+        print("Opening previous index...")
+        index_obj = Indexing(index_file, False)
+
+    if no_directory:
+        print("Indexing files from directory...")
+        index_obj.write_index(document_path, LIST_OF_FIELDS)
+    else:
+        print("Writing single file...")
+        index_obj.write_single_index(document_path, LIST_OF_FIELDS)
 
 
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser(description='Create index from a list of documents or add to existing index')
-#     parser.add_argument('--index_file', default=None, help='The path to index file')
-#     parser.add_argument('--document_path', default=None, help='Path to directory of documents/document')
-#     parser.add_argument('--no_directory', action='store_false', default=True, help='Points to a directory of documents')
-#     parser.add_argument('--new_index', action='store_true', default=False, help='Creating a new index')
-#
-#     start_indexing(**parser.parse_args().__dict__)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Create index from a list of documents or add to existing index')
+    parser.add_argument('--index_file', default=None, help='The path to index file')
+    parser.add_argument('--document_path', default=None, help='Path to directory of documents/document')
+    parser.add_argument('--no_directory', action='store_false', default=True, help='Points to a directory of documents')
+    parser.add_argument('--new_index', action='store_true', default=False, help='Creating a new index')
+
+    start_indexing(**parser.parse_args().__dict__)
 
 
-
-i=Indexing('/Users/bhavyachandra/Desktop/Index',True)
-i.write_index('/Users/bhavyachandra/Desktop/Trial',LIST_OF_FIELDS)
