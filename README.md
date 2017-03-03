@@ -113,6 +113,12 @@ The results of normal tokenization vs stemming analysis were calculated based on
 - _Basic indexing of document and variation of query_  
 Since the timing for retrival of words from basic index is faster, another approach was tried that involved basic indexing of all the words but expansion of the user search query. This provided a middle path between index and user search in terms of timing. For example, 
 
+| Query    | Type of indexing | Total results | Total time | Top results                                                                                                           |
+|----------|------------------|---------------|------------|-----------------------------------------------------------------------------------------------------------------------|
+| murdered | stemming         | 1235          | 39.20 ms   | The Mean Season   Strip Nude for Your Killer   Memories of Murder   Without Evidence   The Rockville Slayer           |
+| murdered | variation        | 1154          | 79.90 ms   | The Mean Season,Strip Nude for Your Killer,Seven Murders for Scotland Yard,Memories of Murder,Murder in Coweta County |
+| care     | stemming         | 214           | 41.31 ms   | Care Bears Movie II: A New Generation   The Other Day in Eden   America   Pauline & Paulette   RoboDoc                |
+| care     | variation        | 229           | 55.07 ms   | Care Bears Movie II: A New Generation Pauline & Paulette   Anita   Bloody Reunion   Dr. Alemn                         |
 
 After analysis, it was clear than the stemming analyser was faster for most query and gave nearly similar results. Thus, in the end the indexing was done with Stemming analysis.
 
