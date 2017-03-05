@@ -11,7 +11,7 @@
   * [A simple UI for crawling and incremental indexing of new data](#question-22)
   * [Example of 5 queries](#question-23)
 
-_Note: The report contains detailed documentation the information retirival system built besides the above questions. The question links are only for quick reference to ensure completeness of assignment. Please go through the whole document_
+_Note: The report contains detailed documentation the information retrieval system built besides the above questions. The question links are only for quick reference to ensure completeness of assignment. Please go through the whole document_
 
 ## Overview
 
@@ -91,12 +91,12 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 #### Question 1.3  
 #### The numbers of records, words, and types (i.e., unique words) in the corpus
 
-| Statistic                     | Count   |   |   |   |
-|-------------------------------|---------|---|---|---|
-| Number of documents           | 20390   |   |   |   |
-| Total words                   | 1404539 |   |   |   |
-| Average # words in a document | 68.8837 |   |   |   |
-| Total unique words            | 177518  |   |   |   |
+| Statistic                     | Count   |
+|-------------------------------|---------|
+| Number of documents           | 20390   |
+| Total words                   | 1404539 |
+| Average # words in a document | 68.8837 |
+| Total unique words            | 177518  |
 
 
 
