@@ -91,6 +91,14 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 #### Question 1.3  
 #### The numbers of records, words, and types (i.e., unique words) in the corpus
 
+| Number of documents           | 20390   |   |   |   |
+|-------------------------------|---------|---|---|---|
+| Total words                   | 1404539 |   |   |   |
+| Average # words in a document | 68.8837 |   |   |   |
+| Total unique words            | 177518  |   |   |   |
+
+
+
 ## 2 Indexing and querying
 
 The corpus was indexed using the python Whoosh library. There were two main reasons for chosing Whoosh over Solr+Lucene.  
