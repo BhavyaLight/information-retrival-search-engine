@@ -91,8 +91,9 @@ We aim to archieve the basic Query functionalities, the implementation of advanc
 #### Question 1.3  
 #### The numbers of records, words, and types (i.e., unique words) in the corpus
 
-| Number of documents           | 20390   |   |   |   |
+| Statistic                     | Count   |   |   |   |
 |-------------------------------|---------|---|---|---|
+| Number of documents           | 20390   |   |   |   |
 | Total words                   | 1404539 |   |   |   |
 | Average # words in a document | 68.8837 |   |   |   |
 | Total unique words            | 177518  |   |   |   |
