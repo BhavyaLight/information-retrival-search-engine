@@ -6,8 +6,19 @@ body {
 
 .main-search {
   background-color: rgba(255, 255, 255, 0.8);
-  width:50%;
+  width:80%;
   padding: 10px;
   margin: auto;
   text-align: center;
+}
+
+ul li {
+  display: inline;
+}
+
+.search-result-item {
+  background-color: rgba(255, 255, 255, 0.90);
+  margin: 10px;
+  width: 80%;
+  margin: auto;
 }
