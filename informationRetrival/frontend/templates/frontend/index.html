@@ -10,11 +10,29 @@
     </form>
   </div>
 
+  {% if error %}
+  <div class="error-block">
+    <h4>{{ message }}</h4>
+  </div>
+  {% endif %}
+
+  {% if correction %}
+  <div class="suggested-corrections">
+    <h4>Did you mean <a><b>{{suggested}}</b></a>?
+      <i>Other Suggestions: </i>
+      {% for suggestion in suggestions %}
+        <a><b>{{suggestion}} </b></a>
+      {% endfor %}
+    </h4>
+  </div>
+  {% endif %}
+
+
   {% if hits %}
   {% for hit in hits %}
   <div class="search-result-item">
-  <h3>{{ hit.title }}</h3>
-  <p>{{ hit.overview }}</p>
+    <h3>{{ hit.title }}</h3>
+    <p>{{ hit.overview }}</p>
   </div>
   {% endfor %}
   {% endif %}

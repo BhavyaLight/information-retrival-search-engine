@@ -16,7 +16,6 @@ def index(request):
             query = form.cleaned_data['search_text']
             # TODO: Change Directory here
             ix = i.open_dir('/Users/noopurjain/Desktop/index')
-            # TODO: Suggest corrected spelling
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
                 try:
@@ -24,10 +23,13 @@ def index(request):
                 except:
                     qry = None
                 if qry is not None:
-                    searcher = ix.searcher()
+                    searcher = ix.searcher(weighting=scoring.TF_IDF())
+                    corrected = searcher.correct_query(qry, query)
+                    if corrected.query != qry:
+                        suggestions = get_more_suggestions(query, search_field, corrected.string, searcher)
+                        return render(request, 'frontend/index.html', {'correction': True, 'suggestions': suggestions, 'suggested': corrected.string, 'form': form})
                     hits = searcher.search(qry)
-                    return render(request, 'frontend/index.html', { 'error':False, 'hits': hits, 'form':form})
-                # TODO: Display error messages on the page
+                    return render(request, 'frontend/index.html', { 'error': False, 'hits': hits, 'form':form})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
@@ -36,7 +38,7 @@ def index(request):
         form = SearchForm()
         return render(request, 'frontend/index.html', {'form': form})
 
-# TODO: Use this function to get more spelling suggestions
+
 def get_more_suggestions(query_string, field_key, corrected_string, s):
     # Stores list of words with spelling error detected
     mistyped_words = []
@@ -51,5 +53,5 @@ def get_more_suggestions(query_string, field_key, corrected_string, s):
     list_of_corrections = dict()
     # Retrieves top 3 closest word based on existing index
     for mistyped_word in mistyped_words:
-        list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=3)
+        list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=4)
     return list_of_corrections
