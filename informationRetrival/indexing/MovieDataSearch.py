@@ -68,7 +68,10 @@ class Search:
 
 FILEPATH="/Users/bhavyachandra/Desktop/Index"
 so=Search(FILEPATH)
-so.search_doc("overview","horrer",True)
+res = so.search_doc("title","interstellar",get_more_suggestions=True)
+print (so.search_result.corrected_query)
+print (so.search_result.suggested_spelling)
+print (so.search_result.overview_result)
 
 
 
