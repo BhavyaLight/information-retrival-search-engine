@@ -18,17 +18,19 @@
 
   {% if correction %}
   <div class="suggested-corrections">
-    <h4>Did you mean <a><b>{{suggested}}</b></a>?
-      <i>Other Suggestions: </i>
-      {% for suggestion in suggestions %}
-        <a><b>{{suggestion}} </b></a>
-      {% endfor %}
-    </h4>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <input type="hidden" value="{{suggested}}" name="search_text">
+      <input type="hidden" value="{{field}}" name="search_field">
+      <h4>Did you mean <input class="suggested-spelling" type="submit" value="{{suggested}}" > ?</h4>
+    </form>
   </div>
   {% endif %}
 
-
   {% if hits %}
+  <div class="time-taken">
+    <h4>{{number}} results found in {{elapsed}} seconds<h4>
+  </div>
   {% for hit in hits %}
   <div class="search-result-item">
     <h3>{{ hit.title }}</h3>
