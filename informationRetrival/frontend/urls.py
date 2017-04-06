@@ -4,4 +4,5 @@ from . import views
 app_name = 'frontend'
 urlpatterns = [
     url('^$', views.index, name='index'),
+    url(r'^classify$', views.classify, name='classify')
 ]

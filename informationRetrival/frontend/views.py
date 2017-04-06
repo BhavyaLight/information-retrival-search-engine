@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from .forms import SearchForm
+from .forms import SearchForm, ClassifyForm
 from django.http import HttpResponseRedirect
 from indexing.MovieDataSearch import Search
 from whoosh.qparser import QueryParser
 from whoosh import index as i
 from whoosh import scoring
 from whoosh import highlight
+from paginate_whoosh import WhooshPage
 import json
+import time
 
 def index(request):
     if request.method == 'POST':
@@ -14,8 +16,10 @@ def index(request):
         if form.is_valid():
             search_field = form.cleaned_data['search_field']
             query = form.cleaned_data['search_text']
+            query = query.replace('+', ' AND ').replace('-', ' NOT ')
             # TODO: Change Directory here
             ix = i.open_dir('/Users/noopurjain/Desktop/index')
+            start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
                 try:
@@ -26,10 +30,15 @@ def index(request):
                     searcher = ix.searcher(weighting=scoring.TF_IDF())
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
-                        suggestions = get_more_suggestions(query, search_field, corrected.string, searcher)
-                        return render(request, 'frontend/index.html', {'correction': True, 'suggestions': suggestions, 'suggested': corrected.string, 'form': form})
+                        return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
+                    pages = WhooshPage(searcher.search(qry, limit=None), page=1, items_per_page=5)
+                    print pages
+                    for page in pages:
+                        print page
                     hits = searcher.search(qry)
-                    return render(request, 'frontend/index.html', { 'error': False, 'hits': hits, 'form':form})
+                    elapsed_time = time.time() - start_time
+                    elapsed_time = "{0:.3f}".format(elapsed_time)
+                    return render(request, 'frontend/index.html', { 'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
@@ -38,20 +47,6 @@ def index(request):
         form = SearchForm()
         return render(request, 'frontend/index.html', {'form': form})
 
-
-def get_more_suggestions(query_string, field_key, corrected_string, s):
-    # Stores list of words with spelling error detected
-    mistyped_words = []
-    # for each word from original query
-    for word in query_string.split(" "):
-        # if the word id mis-spelt, store it
-        if word not in corrected_string:
-            mistyped_words.append(word)
-    # initialize the corrector
-    corrector = s.corrector(field_key)
-    # stores mapping of incorrect->list of correct words
-    list_of_corrections = dict()
-    # Retrieves top 3 closest word based on existing index
-    for mistyped_word in mistyped_words:
-        list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=4)
-    return list_of_corrections
+def classify(request):
+    form = ClassifyForm()
+    return render(request, 'frontend/classify.html', {'form': form})
