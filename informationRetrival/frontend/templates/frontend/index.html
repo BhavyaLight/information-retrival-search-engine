@@ -4,9 +4,9 @@
   <div class="main-search">
     <h1>Discover A Movie</h1>
     <form action="" method="POST">
-      {% csrf_token %}
-      {{ form }}
-      <input class="btn btn-default" type="submit" value="Search" />
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
     </form>
   </div>
 
@@ -29,13 +29,58 @@
 
   {% if hits %}
   <div class="time-taken">
-    <h4>{{number}} results found in {{elapsed}} seconds<h4>
+    <h5>{{number}} results found in {{elapsed}} seconds<h5>
   </div>
+  <div class="row">
+  <div class="search-filters col-lg-3">
+    Filter by year interval:<br/>
+    <b>1970</b>
+    <input id="year-slider" type="text" class="span2"
+    value=""
+    data-slider-min="1970"
+    data-slider-max="2017"
+    data-slider-step="5"
+    data-slider-value="[1990,2015]"/>
+    <b>2017</b>
+    <br/>
+    Filter by Rating: <br/>
+    <input id="rating-slider"
+    type="text"
+    data-provide="slider"
+    data-slider-min="1"
+    data-slider-max="5"
+    data-slider-value="5"
+    data-slider-ticks="[1, 2, 3, 4, 5]"
+    data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+    data-slider-tooltip="hide" />
+  </div>
+  <div class="col-lg-9">
   {% for hit in hits %}
   <div class="search-result-item">
-    <h3>{{ hit.title }}</h3>
-    <p>{{ hit.overview }}</p>
+    <h3 class="hit-title">{{ hit.title }}</h3>
+    <p class="hit-overview">{{ hit.overview }}</p>
   </div>
   {% endfor %}
+  <nav align="center" aria-label="Page navigation">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
+  </div>
+</div>
   {% endif %}
 {% endblock %}
