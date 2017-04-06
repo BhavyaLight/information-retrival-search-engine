@@ -73,5 +73,3 @@ print (so.search_result.corrected_query)
 print (so.search_result.suggested_spelling)
 print (so.search_result.overview_result)
 
-
-

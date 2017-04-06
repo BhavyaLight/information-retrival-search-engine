@@ -7,7 +7,7 @@
         {% csrf_token %}
         {{ form }}
         <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
-    </form>
+
   </div>
 
   {% if error %}
@@ -33,9 +33,12 @@
   </div>
   <div class="row">
   <div class="search-filters col-lg-3">
+    <form action="" method="POST">
+
     Filter by year interval:<br/>
     <b>1970</b>
     <input id="year-slider" type="text" class="span2"
+    name="year"
     value=""
     data-slider-min="1970"
     data-slider-max="2017"
@@ -45,6 +48,7 @@
     <br/>
     Filter by Rating: <br/>
     <input id="rating-slider"
+    name="rating"
     type="text"
     data-provide="slider"
     data-slider-min="1"
@@ -53,41 +57,46 @@
     data-slider-ticks="[1, 2, 3, 4, 5]"
     data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
     data-slider-tooltip="hide" />
+
+    <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
+
   </div>
   <div class="col-lg-9">
-  {% for hit in hits %}
-  <div class="search-result-item">
-    <div class="row">
-      <div class="col-xs-2">
-        <img alt="Poster not available" src="http://image.tmdb.org/t/p/w780/{{hit.poster_path}}" height="200px">
-      </div>
-      <div class="col-xs-9">
-        <h3 class="hit-title">{{ hit.title }}</h3>
-        <p class="hit-overview">{{ hit.overview }}</p>
+    {% for hit in hits %}
+    <div class="search-result-item">
+      <div class="row">
+        <div class="col-xs-2">
+          <img alt="Poster not available" src="http://image.tmdb.org/t/p/w780/{{hit.poster_path}}" height="200px">
+        </div>
+        <div class="col-xs-9">
+          <h3 class="hit-title">{{ hit.title }}</h3>
+          <p class="hit-overview">{{ hit.overview }}</p>
+        </div>
       </div>
     </div>
+    {% endfor %}
+    <!-- <nav align="center" aria-label="Page navigation">
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+    </nav> -->
+    </div>
   </div>
-  {% endfor %}
-  <nav align="center" aria-label="Page navigation">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-  </nav>
   </div>
-</div>
+</form>
   {% endif %}
-{% endblock %}
+{% endblock content %}

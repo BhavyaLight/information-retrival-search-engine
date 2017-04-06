@@ -6,9 +6,23 @@ from whoosh.qparser import QueryParser
 from whoosh import index as i
 from whoosh import scoring
 from whoosh import highlight
-from paginate_whoosh import WhooshPage
+from django.core import serializers
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 import time
+from datetime import datetime
+
+# def paginate(request):
+#     page = request.GET.get('page')
+#     try:
+#         return render(request, 'results/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': length})
+#     except PageNotAnInteger:
+#         # If page is not an integer, deliver first page.
+#         movies = paginator.page(1)
+#     except EmptyPage:
+#         # If page is out of range (e.g. 9999), deliver last page of results.
+#         contacts = paginator.page(paginator.num_pages)
+#     return render(request, 'frontend/results.html', {'movies': movies})
 
 def index(request):
     if request.method == 'POST':
@@ -16,29 +30,33 @@ def index(request):
         if form.is_valid():
             search_field = form.cleaned_data['search_field']
             query = form.cleaned_data['search_text']
+            rating = request.POST.get("rating")
+            year = request.POST.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
+            print (rating)
+            print (year)
             # TODO: Change Directory here
             ix = i.open_dir('/Users/noopurjain/Desktop/index')
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
+                if year!="None" and rating!="None":
+                    old_q = QueryParser.DateRange("release_date", datetime.strptime(year.split(",")[0],"%Y"), datetime.strptime(year.split(",")[1],"%Y"))
+                    print (old_q)
                 try:
                     qry = parser.parse(query)
                 except:
                     qry = None
+                    return render(request, 'frontend/index.html', {'error': True, 'message':"Query is null!", 'form':form})
                 if qry is not None:
                     searcher = ix.searcher(weighting=scoring.TF_IDF())
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
                         return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
-                    pages = WhooshPage(searcher.search(qry, limit=None), page=1, items_per_page=5)
-                    print pages
-                    for page in pages:
-                        print page
-                    hits = searcher.search(qry)
+                    hits = searcher.search(qry,limit=None)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', { 'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
+                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
