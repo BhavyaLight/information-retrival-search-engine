@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from .forms import SearchForm, ClassifyForm
 from django.http import HttpResponseRedirect
-from indexing.MovieDataSearch import Search
 from whoosh.qparser import QueryParser
 from whoosh import index as i
 from whoosh import scoring
 from whoosh import highlight
-from paginate_whoosh import WhooshPage
+from classification.classify import classify
 import json
 import time
 
@@ -18,7 +17,7 @@ def index(request):
             query = form.cleaned_data['search_text']
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/noopurjain/Desktop/index')
+            ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
@@ -31,14 +30,10 @@ def index(request):
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
                         return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
-                    pages = WhooshPage(searcher.search(qry, limit=None), page=1, items_per_page=5)
-                    print pages
-                    for page in pages:
-                        print page
                     hits = searcher.search(qry)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', { 'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
+                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
@@ -47,6 +42,15 @@ def index(request):
         form = SearchForm()
         return render(request, 'frontend/index.html', {'form': form})
 
-def classify(request):
-    form = ClassifyForm()
-    return render(request, 'frontend/classify.html', {'form': form})
+def classification(request):
+    if request.method == "POST":
+        form = ClassifyForm(request.POST)
+        if form.is_valid():
+            plot = form.cleaned_data['classify_plot']
+            genre, time = classify().classify_on(plot)
+            return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
+        else:
+            return render(request, 'frontend/classify.html', {'form': form})
+    else:
+        form = ClassifyForm()
+        return render(request, 'frontend/classify.html', {'form': form})
