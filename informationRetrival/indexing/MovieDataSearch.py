@@ -65,10 +65,3 @@ class Search:
         for mistyped_word in mistyped_words:
             list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=3)
         return list_of_corrections
-
-FILEPATH="/Users/bhavyachandra/Desktop/Index"
-so=Search(FILEPATH)
-so.search_doc("overview","horrer",True)
-
-
-
