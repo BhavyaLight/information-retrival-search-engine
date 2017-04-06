@@ -29,8 +29,8 @@ def index(request):
             year = request.POST.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
             filter_q = None
-            print (rating)
-            print (year)
+            # print (rating)
+            # print (year)
             # TODO: Change Directory here
             ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
             start_time = time.time()

@@ -7,7 +7,7 @@
         {% csrf_token %}
         {{ form }}
         <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
-
+  </form>
   </div>
 
   {% if error %}
@@ -29,7 +29,7 @@
 
   {% if hits %}
   <div class="time-taken">
-    <h5>{{number}} results found in {{elapsed}} seconds<h5>
+    <h5>{{number}} results found in {{elapsed}} seconds</h5>
   </div>
   <div class="row">
   <div class="search-filters col-lg-3">
@@ -59,7 +59,7 @@
     data-slider-tooltip="hide" />
 
     <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
-
+  </form>
   </div>
   <div class="col-lg-9">
     {% for hit in hits %}
@@ -106,5 +106,11 @@
   </div>
   </div>
 </form>
-  {% endif %}
+{% endif %}
+  {% if  number == 0 %}
+<div class="time-taken">
+    <h5>Sorry could not find anything...</h5>
+  </div>
+{% endif %}
+
 {% endblock content %}
