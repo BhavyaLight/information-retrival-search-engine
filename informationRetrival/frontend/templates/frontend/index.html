@@ -57,8 +57,15 @@
   <div class="col-lg-9">
   {% for hit in hits %}
   <div class="search-result-item">
-    <h3 class="hit-title">{{ hit.title }}</h3>
-    <p class="hit-overview">{{ hit.overview }}</p>
+    <div class="row">
+      <div class="col-xs-2">
+        <img alt="Poster not available" src="http://image.tmdb.org/t/p/w780/{{hit.poster_path}}" height="200px">
+      </div>
+      <div class="col-xs-9">
+        <h3 class="hit-title">{{ hit.title }}</h3>
+        <p class="hit-overview">{{ hit.overview }}</p>
+      </div>
+    </div>
   </div>
   {% endfor %}
   <nav align="center" aria-label="Page navigation">
