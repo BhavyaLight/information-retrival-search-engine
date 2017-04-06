@@ -270,7 +270,7 @@ class classify(object):
     def classify_on(self,content):
         content = content.lower()
         #path = os.getcwd() + "/model_files/"
-        path = "/mnt/d/info-ret/mongodb_script/information-retrival-search-engine/informationRetrival/classification/model_files/"
+        path = "/Users/bhavyachandra/Desktop/model_files/"
         print ("The content: ", content)
         t0 = time.clock()
 
