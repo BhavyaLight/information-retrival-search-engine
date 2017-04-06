@@ -6,8 +6,8 @@ import os
 client = MongoClient()
 db = client['IR']
 collection = db['Movies']
-directory_path="C:\\Users\\aish95\\Documents\\Year_4.2\\info_retrieval\\IR\\IR_va"
-for filename in os.listdir("C:\\Users\\aish95\\Documents\\Year_4.2\\info_retrieval\\IR\\IR_va"):
+directory_path="D:\info-ret\information-retrival-search-engine\informationRetrival\indexing\IR\IR"
+for filename in os.listdir(directory_path):
 
     if ".txt" not in filename:
         continue
