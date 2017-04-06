@@ -1,14 +1,9 @@
 from django.shortcuts import render
 from .forms import SearchForm, ClassifyForm
-from django.http import HttpResponseRedirect
-from indexing.MovieDataSearch import Search
 from whoosh.qparser import QueryParser
 from whoosh import index as i
 from whoosh import scoring
-from whoosh import highlight
-from django.core import serializers
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import json
+import whoosh.query as QRY
 import time
 from datetime import datetime
 
@@ -33,16 +28,22 @@ def index(request):
             rating = request.POST.get("rating")
             year = request.POST.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
+            filter_q = None
             print (rating)
             print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/noopurjain/Desktop/index')
+            ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
-                if year!="None" and rating!="None":
-                    old_q = QueryParser.DateRange("release_date", datetime.strptime(year.split(",")[0],"%Y"), datetime.strptime(year.split(",")[1],"%Y"))
-                    print (old_q)
+                if year!=None and rating!=None:
+                    date_q = QRY.DateRange("release_date", datetime.strptime(year.split(",")[0], "%Y"),\
+                                            datetime.strptime(year.split(",")[1], "%Y"))
+                    rating_q = QRY.NumericRange("vote_average",0, int(rating))
+                    filter_q = QRY.Require(date_q, rating_q)
+                else:
+                    year = "1970,2017"
+                    rating = 5
                 try:
                     qry = parser.parse(query)
                 except:
@@ -53,10 +54,10 @@ def index(request):
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
                         return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
-                    hits = searcher.search(qry,limit=None)
+                    hits = searcher.search(qry,filter=filter_q,limit=None)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
+                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
