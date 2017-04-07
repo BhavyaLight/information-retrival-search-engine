@@ -54,17 +54,10 @@ def index(request):
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
                         return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
-<<<<<<< HEAD
                     hits = searcher.search(qry,filter=filter_q,limit=None)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
                     return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
-=======
-                    hits = searcher.search(qry)
-                    elapsed_time = time.time() - start_time
-                    elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits)})
->>>>>>> classification_ui
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
