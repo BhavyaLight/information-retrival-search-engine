@@ -8,6 +8,9 @@ body {
   background-image: url("../images/background.jpg");
 }
 
+.classification-result{
+  background: rgba(255, 255, 255, 0.9);
+}
 .main-search {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 1px;
