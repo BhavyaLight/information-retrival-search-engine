@@ -3,6 +3,7 @@ from .forms import SearchForm, ClassifyForm
 from whoosh.qparser import QueryParser
 from whoosh import index as i
 from whoosh import scoring
+from math import ceil
 import whoosh.query as QRY
 import time
 from datetime import datetime
@@ -54,10 +55,18 @@ def index(request):
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
                         return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
-                    hits = searcher.search(qry,filter=filter_q,limit=None)
+                    # hits = searcher.search(qry, filter=filter_q, limit=None)
+                    page = request.GET.get('page', 1)
+                    print (page)
+                    hits = searcher.search_page(qry,page,filter=filter_q)
+                    page_count = hits.pagecount
+                    islast = hits.is_last_page()
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
+                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, \
+                                                                   'elapsed': elapsed_time, 'number': len(hits), \
+                                                                   'year': year, 'rating': rating, \
+                                                                   'curr_page': page,'page_count': range(1,page_count+1), 'islast':islast})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
@@ -69,3 +78,7 @@ def index(request):
 def classify(request):
     form = ClassifyForm()
     return render(request, 'frontend/classify.html', {'form': form})
+
+def crawl(request):
+    form = SearchForm(request.POST)
+    return render(request, 'frontend/crawl.html', {'form': form})

@@ -7,7 +7,7 @@
         {% csrf_token %}
         {{ form }}
         <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
-  </form>
+
   </div>
 
   {% if error %}
@@ -59,7 +59,6 @@
     data-slider-tooltip="hide" />
 
     <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
-  </form>
   </div>
   <div class="col-lg-9">
     {% for hit in hits %}
@@ -83,34 +82,46 @@
       </div>
     </div>
     {% endfor %}
-    <!-- <nav align="center" aria-label="Page navigation">
+    <nav align="center" aria-label="Page navigation">
     <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
+      {% if page == 1 %}
+        <li>
+        <a class="disabled" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
+      {% else %}
       <li>
-        <a href="#" aria-label="Next">
+        <a href="/1" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% for i in page_count %}
+      {% if page == i %}
+      <li><a class="active">{{ i }} </a></li>
+      {% else %}
+      <li><a href="?page={{ i }}">{{ i }} </a></li>
+      {% endif %}
+      {% if islast %}
+      <li>
+        <a href="/1" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
+      {% endif %}
+      {% endfor %}
     </ul>
-    </nav> -->
+    </nav>
     </div>
   </div>
   </div>
-</form>
+
 {% endif %}
   {% if  number == 0 %}
 <div class="time-taken">
-    <h5>Sorry could not find anything...</h5>
+    <h5>Sorry could not find anything...<a href="/crawl">crawl</a></h5>
   </div>
 {% endif %}
-
+</form>
 {% endblock content %}
