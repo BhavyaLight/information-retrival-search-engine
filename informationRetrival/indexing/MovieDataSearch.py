@@ -1,7 +1,7 @@
 from whoosh.qparser import QueryParser
 from whoosh import index
 from whoosh import scoring
-from whoosh import highlight
+from whoosh.spelling import ListCorrector
 from MovieSearchResult import SearchResult
 
 
@@ -63,12 +63,12 @@ class Search:
         list_of_corrections = dict()
         # Retrieves top 3 closest word based on existing index
         for mistyped_word in mistyped_words:
-            list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=3)
+            list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=5)
         return list_of_corrections
 
 FILEPATH="/Users/bhavyachandra/Desktop/Index"
 so=Search(FILEPATH)
-so.search_doc("overview","horrer",True)
-
-
-
+res = so.search_doc("title","interstellar",get_more_suggestions=True)
+print (so.search_result.corrected_query)
+print (so.search_result.suggested_spelling)
+print (so.search_result.overview_result)
