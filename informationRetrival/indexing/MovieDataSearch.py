@@ -2,6 +2,7 @@ from datetime import  datetime
 from whoosh.qparser import QueryParser
 from whoosh import index
 from whoosh import scoring
+
 from whoosh.qparser.dateparse import DateParserPlugin
 import whoosh.query as query
 from MovieSearchResult import SearchResult
@@ -70,7 +71,7 @@ class Search:
         list_of_corrections = dict()
         # Retrieves top 3 closest word based on existing index
         for mistyped_word in mistyped_words:
-            list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=3)
+            list_of_corrections[mistyped_word] = corrector.suggest(mistyped_word, limit=5)
         return list_of_corrections
 
 FILEPATH="/Users/bhavyachandra/Desktop/Index"
@@ -79,5 +80,4 @@ res = so.search_doc("genres","crime",get_more_suggestions=False)
 print (so.search_result.corrected_query)
 print (so.search_result.suggested_spelling)
 print (len(so.search_result.overview_result))
-
 

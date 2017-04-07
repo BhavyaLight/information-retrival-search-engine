@@ -3,7 +3,6 @@ from .forms import SearchForm, ClassifyForm
 from whoosh.qparser import QueryParser
 from whoosh import index as i
 from whoosh import scoring
-from math import ceil
 import whoosh.query as QRY
 import time
 from datetime import datetime
@@ -75,10 +74,20 @@ def index(request):
         form = SearchForm()
         return render(request, 'frontend/index.html', {'form': form})
 
-def classify(request):
-    form = ClassifyForm()
-    return render(request, 'frontend/classify.html', {'form': form})
+def classification(request):
+    if request.method == "POST":
+        form = ClassifyForm(request.POST)
+        if form.is_valid():
+            plot = form.cleaned_data['classify_plot']
+            genre, time = classify().classify_on(plot)
+            return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
+        else:
+            return render(request, 'frontend/classify.html', {'form': form})
+    else:
+        form = ClassifyForm()
+        return render(request, 'frontend/classify.html', {'form': form})
 
 def crawl(request):
     form = SearchForm(request.POST)
     return render(request, 'frontend/crawl.html', {'form': form})
+

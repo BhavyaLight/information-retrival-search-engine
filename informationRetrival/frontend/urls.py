@@ -3,7 +3,7 @@ from . import views
 
 app_name = 'frontend'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url('^$', views.index, name='index'),
+    url(r'^classify$', views.classification, name='classify'),
     url(r'^crawl', views.crawl),
-    url(r'^classify$', views.classify, name='classify')
 ]
