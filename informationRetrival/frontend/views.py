@@ -32,7 +32,7 @@ def index(request):
             print (rating)
             print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
+            ix = i.open_dir('/Users/noopurjain/Desktop/index')
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
