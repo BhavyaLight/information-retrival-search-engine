@@ -244,4 +244,6 @@ It is seen that in most cases a textual query longer than 5-6 words usually yiel
 Thus, we conclude that N-grams is very powerful in detecting terms similar to user queries, particularly helpful in running longer queries.However it may return misleading results for short, one-word queries as can be seen the the above examples.
 
 ### Recommendation system
+We build a recommendation system based on the tf-idf matching values between a document and the others instead of user query to get a recommendation system. The recommendation system was explored in two parts: Raw recommendation system and through bag of words classification model in Whoosh.
+![RecommendationSystem](#https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/Recom.png)
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
