@@ -362,9 +362,9 @@ class Classification(object):
             return self.Classify_Data()
 
 
-path=os.getcwd()+'/model_files/'
-c = Classification(path)
-c.Train()
+# path=os.getcwd()+'/model_files/'
+# c = Classification(path)
+# c.Train()
 #c.Classify_Data()
 #c.Classify_Text("An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.")
 #print c.get_classification_results()
