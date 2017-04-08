@@ -1,4 +1,4 @@
-from sklearn.metrics import precision_recall_fscore_support
+import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 import string, os
@@ -365,4 +365,3 @@ c = Classification()
 #c.Train()
 #c.classification_results()
 c.classify_on("Romance")
-
