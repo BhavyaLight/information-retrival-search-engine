@@ -23,6 +23,9 @@ from pymongo import MongoClient
 
 
 class Classification(object):
+    path=' '
+    def __init__(self,path):
+        self.path=path
     def Train(self):
         """
         Function to train data set
@@ -35,8 +38,8 @@ class Classification(object):
         collection = db['Movies']
 
         #Path to folder to store trained data set
-        path = os.getcwd() + "/model_files/"
-
+        path=self.path
+        
         #Queries to get 500 horror, romance and crime movies
         qr1=collection.find({"genre.name":"Horror"}).limit(500)
         qr2=collection.find({"genre.name":"Romance"}).limit(500)
@@ -154,9 +157,8 @@ class Classification(object):
         collection = db['Movies']
 
         #Path to folder containing the training model files
-        path = os.getcwd() + "/model_files/" 
-
-        #path = "/mnt/d/model_files_new_with_voting_with_weights/" 
+        path=self.path
+        
         #Get the list of doc ids trained
         trained_docs=[]
         myfile = open(r'doc_ids.pkl', 'rb')
@@ -325,11 +327,7 @@ class Classification(object):
         #convert text to lower case 
         overview = overview.lower()
         
-        
-        path = os.getcwd() + "/model_files/"
-        #path = "/mnt/d/model_files_new_with_voting_with_weights/"
-        
-        #print ("The overview: ", overview)
+        path=self.path        
 
         #start time
         time0 = time.clock()
@@ -341,7 +339,6 @@ class Classification(object):
         Y = vec.fit_transform([overview]).toarray()
         predicted_genre = model.predict(Y)
 
-        #print predicted_genre
         
         #Return predicted genre and time taken for classification
         return predicted_genre, str(round(time.clock() - time0, 3)) + " seconds"
@@ -352,8 +349,7 @@ class Classification(object):
         This functions returns a data structure containing the results of classification
         """
         try:
-            path = os.getcwd() + "/model_files/"
-            #path = "/mnt/d/model_files_new_with_voting_with_weights/"
+            path=self.path
             results = joblib.load(path + "classification_results.txt")
             return results
         
@@ -366,9 +362,9 @@ class Classification(object):
             return self.Classify_Data()
 
 
-
-#c = Classification()
-#c.Train()
+path=os.getcwd()+'/model_files/'
+c = Classification(path)
+c.Train()
 #c.Classify_Data()
 #c.Classify_Text("An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.")
 #print c.get_classification_results()
