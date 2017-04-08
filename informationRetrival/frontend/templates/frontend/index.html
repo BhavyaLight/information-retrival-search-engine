@@ -28,6 +28,11 @@
   </div>
   <div class="row">
   <div class="search-filters col-lg-3">
+    <form action="">
+      <input type="hidden" value="{{ search_text }}" name="search_text">
+      {% for field in search_field %}
+      <input type="hidden" value="{{ field }}" name="search_field">
+      {% endfor %}
       Filter by year interval:<br/>
       <b>1970</b>
       <input id="year-slider" type="text" class="span2" name="year" value=""
@@ -42,6 +47,7 @@
        data-slider-value="[{{ rating }}]"/>
       <b>10</b>
       <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
+    </form>
   </div>
   <div class="col-lg-9">
     {% for hit in hits %}
