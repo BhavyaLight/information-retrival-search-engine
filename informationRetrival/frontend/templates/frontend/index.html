@@ -3,9 +3,10 @@
 {% block content %}
   <div class="main-search">
     <h1>Discover A Movie</h1>
-    <form action="">
+    <form action="/?">
         {{ form }}
         <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
+    </form>
   </div>
 
   {% if error %}
@@ -14,6 +15,7 @@
   </div>
   {% endif %}
 
+  {% block crawl %} {% endblock crawl%}
   {% if correction %}
   <div class="suggested-corrections">
     <h4>Did you mean <a href="/?search_text={{suggested}}{% for field in search_field %}&search_field={{field}}{% endfor %}">{{suggested}}</a>?</h4>
@@ -63,45 +65,49 @@
       </div>
     </div>
     {% endfor %}
-    <nav align="center" aria-label="Page navigation">
-    <ul class="pagination">
-      {% if page == 1 %}
-        <li>
-        <a class="disabled" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {% else %}
-      <li>
-        <a href="/1" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {% endif %}
-      {% for i in page_count %}
-      {% if page == i %}
-      <li><a class="active">{{ i }} </a></li>
-      {% else %}
-      <li><a href="?page={{ i }}">{{ i }} </a></li>
-      {% endif %}
-      {% if islast %}
-      <li>
-        <a href="/1" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-      {% endif %}
-      {% endfor %}
+    <!--<nav align="center" aria-label="Page navigation">-->
+    <!--<ul class="pagination">-->
+      <!--{% if page == 1 %}-->
+        <!--<li>-->
+        <!--<a class="disabled" aria-label="Previous">-->
+          <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% else %}-->
+      <!--<li>-->
+        <!--<a href="/1" aria-label="Previous">-->
+          <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% endif %}-->
+      <!--{% for i in page_count %}-->
+      <!--{% if page == i %}-->
+      <!--<li><a class="active">{{ i }} </a></li>-->
+      <!--{% else %}-->
+      <!--<li><a href="?page={{ i }}">{{ i }} </a></li>-->
+      <!--{% endif %}-->
+      <!--{% if islast %}-->
+      <!--<li>-->
+        <!--<a href="/1" aria-label="Next">-->
+          <!--<span aria-hidden="true">&raquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% endif %}-->
+      <!--{% endfor %}-->
     </ul>
     </nav>
     </div>
   </div>
 {% endif %}
-  {% if  number == 0 %}
+{% if  number == 0 or correction %}
 <div class="time-taken">
-    <h5>Sorry could not find anything...<a href="/crawl">crawl</a></h5>
-  </div>
+  <form action="/crawl">
+    <input type="hidden" value="{{ search_field }}" name="search_field">
+    <input type="hidden" value="{{ search_text }}" name="search_text">
+    <h5>Sorry could not find anything...<input type="submit" class="suggested-spelling" value="crawl" ></h5>
+  </form>
+</div>
 {% endif %}
-</form>
-
 {% endblock content %}
+
+
