@@ -17,7 +17,7 @@
      * [Example of 5 queries](#question-23)
   * [Enhancements](#3-enhancements)
       * [Query variation](#enhancement-of-search-via-better-indexing)
-      * [Recommendation system] (#recommendation-system)
+      * [Recommendation system](#recommendation-system)
 
 ## Overview
 
