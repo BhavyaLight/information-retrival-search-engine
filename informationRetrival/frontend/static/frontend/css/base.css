@@ -12,6 +12,11 @@ body {
   background: rgba(255, 255, 255, 0.9);
 }
 
+.classification-recom {
+  background: rgba(255, 255, 255, 0.9);
+  margin-top: 50px;
+}
+
 .show-movie {
   background: rgba(255, 255, 255, 0.9);
   margin-top: 40px;
@@ -77,4 +82,41 @@ ul li {
   background-color: rgba(255, 255, 255, 0.80);
   padding: 10px;
   margin: auto;
+}
+
+.movie-title {
+  background:none!important;
+  color: #333;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  cursor: pointer;
+  }
+
+.movie-title:hover {
+text-decoration: underline;
+  }
+
+.DocumentList
+{
+    overflow-x:scroll;
+    height: 200 px;
+    width:100%;
+    padding: 0 15px;
+}
+
+.DocumentItem
+{
+    padding:0;
+    height:200px;
+}
+
+.list-inline {
+  white-space:nowrap;
+}
+
+.recommendations {
+  margin: 10px;
+  padding: 10px;
+  margin: 20 0 0 0px;
 }

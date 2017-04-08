@@ -62,7 +62,8 @@
             <input type="hidden" value="{{hit.title}}" name="title">
             <input type="hidden" value="{{hit.overview}}" name="overview">
             <input type="hidden" value="{{hit.poster_path}}" name="poster_path">
-          <h3 class="hit-title"><input type="submit" class="suggested-spelling" value="{{ hit.title }}" >{{ hit.title }}</h3>
+            <input type="hidden" value="{{hit.imdb_id}}" name="imdb_id">
+          <h3 class="hit-title"><input type="submit" class="movie-title" value="{{ hit.title }}" ></h3>
           </form>
           <div class="row">
             <div class="col-xs-2">

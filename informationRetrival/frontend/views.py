@@ -20,7 +20,13 @@ def show(request):
         overview = request.POST.get('overview')
         title = request.POST.get('title')
         poster_path = request.POST.get('poster_path')
-        return render(request, 'frontend/show.html', {'overview': overview, 'title': title, 'poster_path': poster_path})
+        id = request.POST.get('imdb_id')
+        print (id)
+        ix = i.open_dir(INDEX_FILE)
+        searcher = ix.searcher()
+        docnum = searcher.document_number(imdb_id=id)
+        recoms = searcher.more_like(docnum,'overview')
+        return render(request, 'frontend/show.html', {'overview': overview, 'title': title, 'poster_path': poster_path, 'recommendations': recoms})
 
 def index(request):
     if request.method == 'GET':
