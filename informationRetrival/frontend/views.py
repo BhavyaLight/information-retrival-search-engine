@@ -5,6 +5,7 @@ from whoosh import index as i
 from whoosh import scoring
 import whoosh.query as QRY
 import time
+import pandas as pd
 from datetime import datetime
 from classification.classify import Classification
 
@@ -68,16 +69,18 @@ def index(request):
             return render(request, 'frontend/index.html', {'form': form})
 
 def classification(request):
-    results = Classification().get_classification_results();
-    print results;
+    results = Classification('/mnt/d/model_files_new_with_voting_with_weights/').get_classification_results();
+    resultdf = pd.DataFrame(results)
+    print resultdf.to_html
+    
     if request.method == "POST":
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
-            genre, time = Classification().classify_on(plot)
-            return render(request, 'frontend/classify.html', {'results': results, 'form': form, 'genre': genre[0], 'time': time})
+            genre, time = Classification('/mnt/d/model_files_new_with_voting_with_weights/').Classify_Text(plot)
+            return render(request, 'frontend/classify.html', {'results': resultdf.to_html, 'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
     else:
         form = ClassifyForm()
-        return render(request, 'frontend/classify.html', {'results': results, 'form': form})
+        return render(request, 'frontend/classify.html', {'results': resultdf.to_html, 'form': form})
