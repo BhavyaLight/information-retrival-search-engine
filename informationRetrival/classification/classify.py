@@ -1,4 +1,4 @@
-import precision_recall_fscore_support
+from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 import string, os
@@ -347,7 +347,8 @@ class Classification(object):
     """
     def classify_on(self,content):
         content = content.lower()
-        path = os.getcwd() + "/model_files/"
+        #path = os.getcwd() + "/model_files/"
+        path = "/mnt/d/model_files_new_with_voting_with_weights/"
         #path = "/mnt/d/info-ret/mongodb_script/information-retrival-search-engine/informationRetrival/classification/mod__files/"
         print ("The content: ", content)
         t0 = time.clock()
