@@ -1,25 +1,20 @@
 from django.shortcuts import render
 from .forms import SearchForm, ClassifyForm
-from whoosh.qparser import MultifieldParser
+from whoosh.qparser import MultifieldParser, QueryParser
 from whoosh import index as i
 from whoosh import scoring
 import whoosh.query as QRY
 import time
 import pandas as pd
 from datetime import datetime
+from indexing.crawl import crawl_and_update
 from classification.classify import Classification
 
-# def paginate(request):
-#     page = request.GET.get('page')
-#     try:
-#         return render(request, 'results/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': length})
-#     except PageNotAnInteger:
-#         # If page is not an integer, deliver first page.
-#         movies = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range (e.g. 9999), deliver last page of results.
-#         contacts = paginator.page(paginator.num_pages)
-#     return render(request, 'frontend/results.html', {'movies': movies})
+INDEX_FILE = '/mnt/d/model_files_new_with_voting_with_weights/'
+WRITE_FILE = '/Users/bhavyachandra/Desktop/Trial_2'
+CLASSIFICATION_PATH = '/Users/bhavyachandra/Desktop/model_files_new_with_voting_with_weights/'
+
+
 
 def index(request):
     if request.method == 'GET':
@@ -31,10 +26,8 @@ def index(request):
             year = request.GET.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
             filter_q = None
-            print (rating)
-            print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/noopurjain/Desktop/index')
+            ix = i.open_dir(INDEX_FILE)
             start_time = time.time()
             if query is not None and query != u"":
                 parser = MultifieldParser(search_field, schema=ix.schema)
@@ -59,7 +52,9 @@ def index(request):
                     hits = searcher.search(qry,filter=filter_q,limit=None)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', {'search_field': search_field, 'search_text': form.cleaned_data['search_text'], 'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
+                    return render(request, 'frontend/index.html', {'search_field': search_field, 'search_text': form.cleaned_data['search_text'], \
+                                                                   'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time,\
+                                                                   'number': len(hits), 'year': year, 'rating': rating})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
@@ -68,8 +63,9 @@ def index(request):
             form = SearchForm()
             return render(request, 'frontend/index.html', {'form': form})
 
+
 def classification(request):
-    results = Classification('/mnt/d/model_files_new_with_voting_with_weights/').get_classification_results();
+    results = Classification(CLASSIFICATION_PATH).get_classification_results()
     resultdf = pd.DataFrame(results)
     print resultdf.to_html
     
@@ -77,10 +73,31 @@ def classification(request):
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
-            genre, time = Classification('/mnt/d/model_files_new_with_voting_with_weights/').Classify_Text(plot)
+            genre, time = Classification(CLASSIFICATION_PATH).Classify_Text(plot)
             return render(request, 'frontend/classify.html', {'results': resultdf.to_html, 'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
     else:
         form = ClassifyForm()
         return render(request, 'frontend/classify.html', {'results': resultdf.to_html, 'form': form})
+
+
+def crawl(request):
+    if request.method == "GET":
+        form = SearchForm(request.GET)
+        date_now = datetime.now()
+        search_field = request.GET.get('search_field')
+        query = request.GET.get('search_text')
+        ix = i.open_dir(INDEX_FILE)
+        parser = QueryParser("release_date", schema=ix.schema)
+        qry = parser.parse(date_now.strftime("%Y-%m-%d"))
+        searcher = ix.searcher()
+        hits = searcher.search(qry, limit=1)
+        print (len(hits))
+        if (len(hits)==0):
+        # send new records directory to the indexing function to add them to the index
+            total_records = crawl_and_update(date_now, WRITE_FILE, INDEX_FILE)
+        else:
+            total_records = "Already up-to-date"
+        return render(request, 'frontend/crawl.html', {'total_records': total_records, 'form': form})
+
