@@ -6,24 +6,26 @@ from whoosh import scoring
 import whoosh.query as QRY
 import time
 from datetime import datetime
+from indexing.crawl import crawl_and_update
 from classification.classify import Classification
 
+INDEX_FILE = '/Users/bhavyachandra/Desktop/Index_2'
+WRITE_FILE = '/Users/bhavyachandra/Desktop/Trial_2'
 CLASSIFICATION_PATH = '/Users/bhavyachandra/Desktop/model_files_new_with_voting_with_weights/'
 
+
 def index(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
         if form.is_valid():
             search_field = form.cleaned_data['search_field']
             query = form.cleaned_data['search_text']
-            rating = request.POST.get("rating")
-            year = request.POST.get("year")
+            rating = request.GET.get("rating")
+            year = request.GET.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
             filter_q = None
-            print (rating)
-            print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
+            ix = i.open_dir(INDEX_FILE)
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
@@ -44,18 +46,20 @@ def index(request):
                     searcher = ix.searcher(weighting=scoring.TF_IDF())
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
-                        return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
+                        return render(request, 'frontend/index.html', {'search_field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
                     hits = searcher.search(qry,filter=filter_q,limit=None)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
+                    return render(request, 'frontend/index.html', {'search_field': search_field, 'search_text': form.cleaned_data['search_text'], 'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
                 return render(request, 'frontend/index.html', {'error': True, 'message':'oops', 'form':form})
-    else:
-        form = SearchForm()
-        return render(request, 'frontend/index.html', {'form': form})
+        else:
+            form = SearchForm()
+            return render(request, 'frontend/index.html', {'form': form})
+
+
 
 def classification(request):
     if request.method == "POST":
@@ -69,3 +73,24 @@ def classification(request):
     else:
         form = ClassifyForm()
         return render(request, 'frontend/classify.html', {'form': form})
+
+
+def crawl(request):
+    if request.method == "GET":
+        form = SearchForm(request.GET)
+        date_now = datetime.now()
+        search_field = request.GET.get('search_field')
+        query = request.GET.get('search_text')
+        ix = i.open_dir(INDEX_FILE)
+        parser = QueryParser("release_date", schema=ix.schema)
+        qry = parser.parse(date_now.strftime("%Y-%m-%d"))
+        searcher = ix.searcher()
+        hits = searcher.search(qry, limit=1)
+        print (len(hits))
+        if (len(hits)==0):
+        # send new records directory to the indexing function to add them to the index
+            total_records = crawl_and_update(date_now, WRITE_FILE, INDEX_FILE)
+        else:
+            total_records = "Already up-to-date"
+        return render(request, 'frontend/crawl.html', {'total_records': total_records, 'form': form})
+

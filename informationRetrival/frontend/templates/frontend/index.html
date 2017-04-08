@@ -3,11 +3,10 @@
 {% block content %}
   <div class="main-search">
     <h1>Discover A Movie</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
+    <form action="/?">
         {{ form }}
         <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
-
+    </form>
   </div>
 
   {% if error %}
@@ -16,12 +15,12 @@
   </div>
   {% endif %}
 
+  {% block crawl %} {% endblock crawl%}
   {% if correction %}
   <div class="suggested-corrections">
-    <form action="" method="POST">
-      {% csrf_token %}
+    <form action="">
+      <input type="hidden" value="{{search_field}}" name="search_field">
       <input type="hidden" value="{{suggested}}" name="search_text">
-      <input type="hidden" value="{{field}}" name="search_field">
       <h4>Did you mean <input class="suggested-spelling" type="submit" value="{{suggested}}" > ?</h4>
     </form>
   </div>
@@ -33,33 +32,21 @@
   </div>
   <div class="row">
   <div class="search-filters col-lg-3">
-    <form action="" method="POST">
-
-    Filter by year interval:<br/>
-    <b>1970</b>
-    <input id="year-slider" type="text" class="span2"
-    name="year"
-    value=""
-    data-slider-min="1970"
-    data-slider-max="2017"
-    data-slider-step="2"
-    data-slider-value="[{{ year }}]"/>
-    <b>2017</b>
-    <br/>
-    Filter by Rating: <br/>
-    <input id="rating-slider"
-    name="rating"
-    type="text"
-    data-provide="slider"
-    data-slider-min="1"
-    data-slider-max="10"
-    data-slider-value={{ rating }}
-    data-slider-ticks="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-    data-slider-ticks-labels='["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]'
-    data-slider-tooltip="hide" />
-
-    <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
-
+      <!-- <input type="hidden" value="{{search_field}}" name="search_field">
+      <input type="hidden" value="{{search_text}}" name="search_text"> -->
+      Filter by year interval:<br/>
+      <b>1970</b>
+      <input id="year-slider" type="text" class="span2" name="year" value=""
+       data-slider-min="1970" data-slider-max="2017" data-slider-step="2"
+       data-slider-value="[{{ year }}]"/>
+      <b>2017</b>
+      <br/>
+      Filter by Rating: <br/>
+      <input id="rating-slider" name="rating" type="text" data-provide="slider" data-slider-min="1"
+       data-slider-max="10" data-slider-value={{ rating }} data-slider-ticks="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+       data-slider-ticks-labels='["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]'
+       data-slider-tooltip="hide" />
+      <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
   </div>
   <div class="col-lg-9">
     {% for hit in hits %}
@@ -83,28 +70,50 @@
       </div>
     </div>
     {% endfor %}
-    <!-- <nav align="center" aria-label="Page navigation">
-    <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li>
-        <a href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
+    <!--<nav align="center" aria-label="Page navigation">-->
+    <!--<ul class="pagination">-->
+      <!--{% if page == 1 %}-->
+        <!--<li>-->
+        <!--<a class="disabled" aria-label="Previous">-->
+          <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% else %}-->
+      <!--<li>-->
+        <!--<a href="/1" aria-label="Previous">-->
+          <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% endif %}-->
+      <!--{% for i in page_count %}-->
+      <!--{% if page == i %}-->
+      <!--<li><a class="active">{{ i }} </a></li>-->
+      <!--{% else %}-->
+      <!--<li><a href="?page={{ i }}">{{ i }} </a></li>-->
+      <!--{% endif %}-->
+      <!--{% if islast %}-->
+      <!--<li>-->
+        <!--<a href="/1" aria-label="Next">-->
+          <!--<span aria-hidden="true">&raquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% endif %}-->
+      <!--{% endfor %}-->
     </ul>
-    </nav> -->
+    </nav>
     </div>
   </div>
   </div>
-</form>
-  {% endif %}
+
+{% endif %}
+{% if  number == 0 or correction %}
+<div class="time-taken">
+  <form action="/crawl">
+    <input type="hidden" value="{{ search_field }}" name="search_field">
+    <input type="hidden" value="{{ search_text }}" name="search_text">
+    <h5>Sorry could not find anything...<input type="submit" class="suggested-spelling" value="crawl" ></h5>
+  </form>
+</div>
+{% endif %}
 {% endblock content %}
+

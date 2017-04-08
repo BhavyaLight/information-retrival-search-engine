@@ -1,7 +1,10 @@
+from datetime import  datetime
 from whoosh.qparser import QueryParser
 from whoosh import index
 from whoosh import scoring
-from whoosh.spelling import ListCorrector
+
+from whoosh.qparser.dateparse import DateParserPlugin
+import whoosh.query as query
 from MovieSearchResult import SearchResult
 
 
@@ -26,8 +29,11 @@ class Search:
         self.search_result.original_query = query_string
         # Query initialization
         qp = QueryParser(field_key, schema=self.ix.schema)
+        qp.add_plugin(DateParserPlugin())
         q = qp.parse(query_string)
-
+        # old_query = query.DateRange("release_date",datetime.strptime("1995","%Y"),datetime.strptime("2000","%Y"))
+        # allow_query = query.NumericRange("vote_average",5, 10)
+        # allow_query = query.Require(old_query,allow_query)
         # Only as long as 's' is open we can access results (iterator is returned)
         with self.ix.searcher(weighting=scoring.TF_IDF()) as s:
                 # checks query for spelling errors
@@ -41,9 +47,11 @@ class Search:
                         suggestions = self.get_more_suggestions(query_string, field_key, corrected.string, s)
                         self.search_result.set_item("suggested_spelling", suggestions)
                 # gets final search result from index
-                results = list(s.search(q, limit=number_of_results))
+                results = s.search(q) #, filter = allow_query,limit=number_of_results)
+
                 # Makeshift function for now, in order to store iterator in the search_result
-                print (results[:1])
+                print (results[:5])
+                print (len(results))
                 # Stores result as a list
                 self.search_result.set_item(field_key, list(results))
 
@@ -68,7 +76,8 @@ class Search:
 
 FILEPATH="/Users/bhavyachandra/Desktop/Index"
 so=Search(FILEPATH)
-res = so.search_doc("title","interstellar",get_more_suggestions=True)
+res = so.search_doc("release_date","2009-10-09",get_more_suggestions=False)
 print (so.search_result.corrected_query)
 print (so.search_result.suggested_spelling)
-print (so.search_result.overview_result)
+print (len(so.search_result.overview_result))
+
