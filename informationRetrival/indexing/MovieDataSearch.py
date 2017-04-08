@@ -31,9 +31,9 @@ class Search:
         qp = QueryParser(field_key, schema=self.ix.schema)
         qp.add_plugin(DateParserPlugin())
         q = qp.parse(query_string)
-        old_query = query.DateRange("release_date",datetime.strptime("1995","%Y"),datetime.strptime("2000","%Y"))
-        allow_query = query.NumericRange("vote_average",5, 10)
-        allow_query = query.Require(old_query,allow_query)
+        # old_query = query.DateRange("release_date",datetime.strptime("1995","%Y"),datetime.strptime("2000","%Y"))
+        # allow_query = query.NumericRange("vote_average",5, 10)
+        # allow_query = query.Require(old_query,allow_query)
         # Only as long as 's' is open we can access results (iterator is returned)
         with self.ix.searcher(weighting=scoring.TF_IDF()) as s:
                 # checks query for spelling errors
@@ -47,7 +47,7 @@ class Search:
                         suggestions = self.get_more_suggestions(query_string, field_key, corrected.string, s)
                         self.search_result.set_item("suggested_spelling", suggestions)
                 # gets final search result from index
-                results = s.search(q, filter = allow_query,limit=number_of_results)
+                results = s.search(q) #, filter = allow_query,limit=number_of_results)
 
                 # Makeshift function for now, in order to store iterator in the search_result
                 print (results[:5])
@@ -76,7 +76,7 @@ class Search:
 
 FILEPATH="/Users/bhavyachandra/Desktop/Index"
 so=Search(FILEPATH)
-res = so.search_doc("genres","crime",get_more_suggestions=False)
+res = so.search_doc("release_date","2009-10-09",get_more_suggestions=False)
 print (so.search_result.corrected_query)
 print (so.search_result.suggested_spelling)
 print (len(so.search_result.overview_result))

@@ -283,8 +283,8 @@ class classify(object):
         print predicted
         return predicted, str(round(time.clock() - t0, 3)) + " seconds"
 
-c = classify()
+# c = classify()
 #c.train_data()
 #c.classification_results()
-c.classify_on("Fifteen years after murdering his sister on Halloween night 1963, Michael Myers escapes from a mental hospital and returns to the small town of Haddonfield to kill again.")
+# c.classify_on("Fifteen years after murdering his sister on Halloween night 1963, Michael Myers escapes from a mental hospital and returns to the small town of Haddonfield to kill again.")
 

@@ -124,3 +124,5 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+REST_API_KEY = "4413e4bd6b1b3f708ae7847af1b27379"

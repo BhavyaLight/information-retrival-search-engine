@@ -6,18 +6,12 @@ from whoosh import scoring
 import whoosh.query as QRY
 import time
 from datetime import datetime
+from indexing.crawl import crawl_and_update
+from classification.classify import classify
 
-# def paginate(request):
-#     page = request.GET.get('page')
-#     try:
-#         return render(request, 'results/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': length})
-#     except PageNotAnInteger:
-#         # If page is not an integer, deliver first page.
-#         movies = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range (e.g. 9999), deliver last page of results.
-#         contacts = paginator.page(paginator.num_pages)
-#     return render(request, 'frontend/results.html', {'movies': movies})
+INDEX_FILE = '/Users/bhavyachandra/Desktop/Index_2'
+WRITE_FILE = '/Users/bhavyachandra/Desktop/Trial_2'
+
 
 def index(request):
     if request.method == 'GET':
@@ -29,10 +23,8 @@ def index(request):
             year = request.GET.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
             filter_q = None
-            # print (rating)
-            # print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/noopurjain/Desktop/index')
+            ix = i.open_dir(INDEX_FILE)
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
@@ -66,6 +58,8 @@ def index(request):
             form = SearchForm()
             return render(request, 'frontend/index.html', {'form': form})
 
+
+
 def classification(request):
     if request.method == "POST":
         form = ClassifyForm(request.POST)
@@ -79,7 +73,24 @@ def classification(request):
         form = ClassifyForm()
         return render(request, 'frontend/classify.html', {'form': form})
 
+
 def crawl(request):
-    form = SearchForm(request.POST)
-    return render(request, 'frontend/crawl.html', {'form': form})
+    if request.method == "GET":
+        form = SearchForm(request.GET)
+        date_now = datetime.now()
+        search_field = request.GET.get('search_field')
+        query = request.GET.get('search_text')
+        ix = i.open_dir(INDEX_FILE)
+        parser = QueryParser("release_date", schema=ix.schema)
+        qry = parser.parse(date_now.strftime("%Y-%m-%d"))
+        searcher = ix.searcher()
+        hits = searcher.search(qry, limit=1)
+        print (len(hits))
+        if (len(hits)==0):
+        # send new records directory to the indexing function to add them to the index
+            total_records = crawl_and_update(date_now, WRITE_FILE, INDEX_FILE)
+        else:
+            total_records = "Already up-to-date"
+        return render(request, 'frontend/crawl.html', {'total_records': total_records, 'form': form})
+
 

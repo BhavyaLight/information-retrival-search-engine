@@ -109,7 +109,7 @@ class Indexing:
         writer.commit(optimize=optimise, merge=merge)
         print(str(counter)+" document(s) added")
 
-    def write_single_index(self, file_path, list_of_fields):
+    def write_single_index(self, file_path, list_of_fields=LIST_OF_FIELDS):
         """
         Add a single document to the existing index
         :param directory_path:
@@ -121,14 +121,14 @@ class Indexing:
         writer = self.ix.writer()
         # get data from file
         data = self.index_doc(file_path, list_of_fields)
-        writer.add_document(overview=data['overview'], tagline=data['tagline'], title=data['title'], production_companies=data['production_companies'], \
-                            genres=data['genres'], runtime=data['runtime'], poster_path=data['poster_path'], imdb_id=data['imdb_id'], popularity=data['popularity'],\
-                            revenue=data['revenue'], vote_average=data['vote_average'], adult=data['adult'], release_date=data['release_date'])
+        # writer.add_document(overview=data['overview'], tagline=data['tagline'], title=data['title'], production_companies=data['production_companies'], \
+        #                     genres=data['genres'], runtime=data['runtime'], poster_path=data['poster_path'], imdb_id=data['imdb_id'], popularity=data['popularity'],\
+        #                     revenue=data['revenue'], vote_average=data['vote_average'], adult=data['adult'], release_date=data['release_date'])
 
         # Was used in python 2.7 to support unicode encoding
-        # writer.add_document(overview=unicode(data['overview']), tagline=unicode(data['tagline']), title=unicode(data['title']), production_companies=unicode(data['production_companies']), \
-        #                     genres=unicode(data['genres']), runtime=unicode(data['runtime']), poster_path=unicode(data['poster_path']), imdb_id=unicode(data['imdb_id']), popularity=unicode(data['popularity']),\
-        #                     revenue=unicode(data['revenue']), vote_average=unicode(data['vote_average']), adult=unicode(data['adult']), release_date=unicode(data['release_date']))
+        writer.add_document(overview=unicode(data['overview']), tagline=unicode(data['tagline']), title=unicode(data['title']), production_companies=unicode(data['production_companies']), \
+                            genres=unicode(data['genres']), runtime=unicode(data['runtime']), poster_path=unicode(data['poster_path']), imdb_id=unicode(data['imdb_id']), popularity=unicode(data['popularity']),\
+                            revenue=unicode(data['revenue']), vote_average=unicode(data['vote_average']), adult=unicode(data['adult']), release_date=unicode(data['release_date']))
         writer.commit()
         print("Document added")
 
