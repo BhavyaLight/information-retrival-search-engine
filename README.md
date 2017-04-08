@@ -1,17 +1,20 @@
 # Information Retrival Search Engine
 
 ## Quick-index to assignment questions
-
-* [Question 1](#question-1)
-  * [How you crawled the corpus?](#question-11)
-  * [what kind of information users would like to retreive?](#question-12)
-  * [The numbers of records, words, and types (i.e., unique words) in the corpus](#question-13)
-* [Question 2](#question-2)
-  * [Build a simple web interface](#question-21)
-  * [A simple UI for crawling and incremental indexing of new data](#question-22)
-  * [Example of 5 queries](#question-23)
-
-_Note: The report contains detailed documentation the information retrieval system built besides the above questions. The question links are only for quick reference to ensure completeness of assignment. Please go through the whole document_
+* [Why we chose to work on a movie database?](#overview)
+* [Crawling the data](#1-crawling-the-data)
+  * [Question 1](#question-1)
+     * [How you crawled the corpus?](#question-11)
+     * [what kind of information users would like to retreive?](#question-12)
+     * [The numbers of records, words, and types (i.e., unique words) in the corpus](#question-13)
+* [Indexing and Query analysis](#1-indexing)
+  * [Standard indexing vs Stemming analysis vs Query variation](#2-indexing-and-querying)
+  * [Modification on user query](#2-querying)
+  * [Ranking](#3-ranking)
+  * [Question 2](#question-2-perform-the-following-tasks)
+     * [Build a simple web interface](#question-21)
+     * [A simple UI for crawling and incremental indexing of new data](#question-22)
+     * [Example of 5 queries](#question-23)
 
 ## Overview
 
@@ -164,17 +167,13 @@ After analysis, it was clear than the stemming analyser was faster for most quer
 
 The Querying is a simple user-input that returns the best matched results. To provide best user-experience, the following querying features were implemented:  
 
-1. _Automatic spell-correction_: The user query undergoes automatic spell correction in case the query contains words not present in the reverse-index.  
-[Future-Update-Under-Implementation] The query will also provide user interactivity to pick from a list of corrected spelling of misspelt words.  
-2. _Query term highlighting_: [Under-construction] The returned result text contains the highlighted original query term(s) by making them bold to enhance user interaction.
-3. _Query by different fields_: Currently, in order to query by different fields such as 'Title' or 'Overview', different radio button is required to be selected in the UI since each field is indexed seperately.
-[Advanced] Improve the user search experience such that it is not required to chose the field. The following options are available in order to archieve this:-  
-- Merge results from different searches of each field  
-Pro's: Easy to implement  
-Con's: Increases time, ranking on merging from different field difficult to pinpoint
-- Make one index for all text fields instead of several
-Pro's: Easy to implement
-Con's: Possibly increase time due to increase in size of index
+1. _Automatic spell-correction_: The user query undergoes automatic spell correction in case the query contains words not present in the reverse-index. The suggested spelling is presented to the user, where he can click t accept the suggestion and a new search takes place for the accepted suggestions.    
+2. _Query by multiple fields_: Currently, in order to query by different fields such as 'Title' or 'Overview', different radio button is required to be selected in the UI since each field is indexed seperately.
+3. _Simple boolean operation on user query_: The user can perform boolean queries such as 'eat - food' or 'sing + dance' to perform search on the data that contains eat but not food, and contains both sing and dance etc.
+4. _Refining of queries_: Meta-data such as year of release and review are used as filter to provide user ease of narrowing down their results.
+NOTE: The filtering is not done via javascript but refining search results through our index.
+5. _Dynamic Crawling_: Covered under Question 2.2
+
 
 
 ### 3. Ranking
@@ -196,17 +195,23 @@ The time taken to find the best results, ranked according to the tf-idf score, a
 
 #### Question 2.2
 #### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)  
-[To-do]  
+Incremental crawling and indexing of data is possible on the basis of query and date. If a user search fails or is not found, new data is automatically crawled and if the search query exists in the results it is displayed. The crawling can be done by both query or date, but we chose crawl by date as the default implementation. The reason for this choice were:  
+- The api used to retrieve data can only respond by querying of title with limited hits. In case the use makes a query for the overview, the api cannot return the data. Manual crawling of html pages was considered to eliminate this restriction, however the number of movie records were abudant and this was time consuming.
+- Thus, the data is considered to be updated if all records from last fetch to the current date have been fetched. Thus we crawl dynamically by only considering the dates between previous crawl and current date. This considerably reduces the data to be crawled. We then fetch the records and add them to the current index. 
+_(NOTE: Ideally all records should be added but sometimes, the records fetched fetched are >100K, hence, we only store a sample in our index and update it for demonstration purpose of this project)_
 
 #### Question 2.3
 #### Write five queries, get their results, and measure the speed of the querying  
 
 | Query                           | Field searched | Total results | Total time | Top results                                                                                                                                    |
 |---------------------------------|----------------|---------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| murderous clowns                | overview       | 6             | 27.53 ms   | Fear of Clowns, Der Clown - Tag der Vergeltung, Clownhouse, Camp Blood 2, Satan's Storybook                                                        |
-| love travel                     | overview       | 61            | 28.79 ms   | Kyun...! Ho Gaya Na, The Tiger and the Snow,  Ship of Fools, Transformations, Look at Me with Pornographic Eyes                                     |
-| blood                           | tagline        | 53            | 30.93 ms   | Dillinger, Sleepers, Flaming Frontier, Straight to Hell, Bound by Honor                                                                            |
-| when in Rome                    | title          | 5             | 23.08 ms   | Tony Rome, The Fall of Rome, The Hidden History of Rome, When in Rome Rome, Open City                                                             |
-| criminal and horror and mystery | genres         | 40            | 344.47 ms  | `(Spell check)Did you mean: crime and horror and mystery` The Murders in the Rue, Morgue Blue Velvet, Close Your Eyes, Not Forgotten, The Seamstress |
+| A villager prays for his grandson              | overview       | 1             | 0.06s   | Promise me this                                                        |
+| ghost haunting a house                     | overview, title       | 14           | 0.035s   | The Ghost of Angela Web, Thirteen Erotic Ghosts, Death of a ghost hunter                                     |
+| boy + girl - love                           | overview, title        | 71            | 0.063s   | Puberty Blues, The Pirate Movie, Take a Chance, Summer Camp Nightmare                                                                           |
+| serial killer and a detective                   | overview, title          | 31             | 0.034s   | Copy cat, Frankenstein, 10 to Midnight, Detective Story                                                             |
+| the princess and prince | overview, title         | 25            | 0.04 sec  | Sinbad and the Eye of the Tiger, The Adventures of Prince Achmed, The Wild Swans |
 
+## 3 Enhancements
+### Enhancement of search via better indexing
+### Recommendation system through machiene learning
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
