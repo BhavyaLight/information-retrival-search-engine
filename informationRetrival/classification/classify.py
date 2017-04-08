@@ -161,7 +161,7 @@ class Classification(object):
         
         #Get the list of doc ids trained
         trained_docs=[]
-        myfile = open(r'doc_ids.pkl', 'rb')
+        myfile = open(r'doc_ids.pkl','rb')
         trained_docs=pickle.load(myfile)
 
         #Mongo queries to retrieve Horror, Romance and Crime movies
@@ -177,7 +177,7 @@ class Classification(object):
                i=i+1
                horr.append(rec)
                
-            if i>=100:
+            if i>=333:
                 break
 
         rom=[]
@@ -187,7 +187,7 @@ class Classification(object):
                i=i+1
                rom.append(rec)
  
-            if i>=100:
+            if i>=333:
                 break
 
         crime=[]
@@ -197,7 +197,7 @@ class Classification(object):
                i=i+1
                crime.append(rec)
                
-            if i>=100:
+            if i>=334:
                 break
 
         #Combine the query results
@@ -214,13 +214,14 @@ class Classification(object):
 
         #Genres of records to be classified 
         categories = []
-        
+
         for movie in query_results:
             test_data.append(movie['overview'])
             for genre in movie['genre']:
                 if ((genre['name']=='Horror') or (genre['name']=='Romance') or (genre['name']=='Crime')):
                    categories.append(genre['name'])
                    break
+
 
 
         #Lists of training models and vectorizers
@@ -291,9 +292,9 @@ class Classification(object):
                 print("________SCORES__________")
                 print("MODEL      :  " + models[i])
                 print("VECTORIZER :  " + vectorizers[j])
-                print("Horror     :  %d/100" % (horror))
-                print("Romance    :  %d/100" % (romance))
-                print("Crime      :  %d/100" % (crime))
+                print("Horror     :  %d/333" % (horror))
+                print("Romance    :  %d/333" % (romance))
+                print("Crime      :  %d/334" % (crime))
                 print("Precision  :  %.5f" % (score[0]))
                 print("Recall     :  %.5f" % (score[1]))
                 print("F(1) Score :  %.5f" % ((score[1] * score[0] / (score[1] + score[0])) * 2))
@@ -303,9 +304,9 @@ class Classification(object):
                 dic={}
                 dic['model']=models[i].title()
                 dic['vectorizer']=vectorizers[j][:-11]
-                dic['horror']=str(horror)+'/'+'100'
-                dic['romance']=str(romance)+'/'+'100'
-                dic['crime']=str(crime)+'/'+'100'
+                dic['horror']=str(horror)+'/'+'333'
+                dic['romance']=str(romance)+'/'+'333'
+                dic['crime']=str(crime)+'/'+'334'
                 dic['precision']=round(score[0], 3)
                 dic['Recall']=round(score[1], 3)
                 dic['F(1) Score']=round(accuracy_score(y_correct, y_predicted), 3)
@@ -313,7 +314,7 @@ class Classification(object):
                 dic['accuracy']=round(score[2], 3)
                 stats.append(dic)
         #Store stats in file        
-        joblib.dump(stats, path + "classification_results.txt")
+        joblib.dump(stats, path + "classification_results_1000_no_trained_data.txt")
 
         print "Done"
         return stats
@@ -361,11 +362,3 @@ class Classification(object):
             print ("Classification results not found. Generating results...")
             return self.Classify_Data()
 
-
-
-#path=os.getcwd()+'/model_files/'
-#c = Classification(path)
-#c.Train()
-#c.Classify_Data()
-#c.Classify_Text("An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.")
-#print c.get_classification_results()
