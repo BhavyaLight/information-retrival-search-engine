@@ -71,7 +71,7 @@ def classification(request):
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
-            genre, time = Classification().Classify_Text(plot)
+            genre, time = Classification('/mnt/d/model_files_new_with_voting_with_weights/').Classify_Text(plot)
             return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
