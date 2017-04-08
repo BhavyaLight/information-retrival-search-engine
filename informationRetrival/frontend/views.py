@@ -20,19 +20,19 @@ from datetime import datetime
 #     return render(request, 'frontend/results.html', {'movies': movies})
 
 def index(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
         if form.is_valid():
             search_field = form.cleaned_data['search_field']
             query = form.cleaned_data['search_text']
-            rating = request.POST.get("rating")
-            year = request.POST.get("year")
+            rating = request.GET.get("rating")
+            year = request.GET.get("year")
             query = query.replace('+', ' AND ').replace('-', ' NOT ')
             filter_q = None
             # print (rating)
             # print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
+            ix = i.open_dir('/Users/noopurjain/Desktop/index')
             start_time = time.time()
             if query is not None and query != u"":
                 parser = QueryParser(search_field, schema=ix.schema)
@@ -53,26 +53,18 @@ def index(request):
                     searcher = ix.searcher(weighting=scoring.TF_IDF())
                     corrected = searcher.correct_query(qry, query)
                     if corrected.query != qry:
-                        return render(request, 'frontend/index.html', {'field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
-                    # hits = searcher.search(qry, filter=filter_q, limit=None)
-                    page = request.GET.get('page', 1)
-                    print (page)
-                    hits = searcher.search_page(qry,page,filter=filter_q)
-                    page_count = hits.pagecount
-                    islast = hits.is_last_page()
+                        return render(request, 'frontend/index.html', {'search_field': search_field, 'correction': True, 'suggested': corrected.string, 'form': form})
+                    hits = searcher.search(qry,filter=filter_q,limit=None)
                     elapsed_time = time.time() - start_time
                     elapsed_time = "{0:.3f}".format(elapsed_time)
-                    return render(request, 'frontend/index.html', {'error': False, 'hits': hits, 'form':form, \
-                                                                   'elapsed': elapsed_time, 'number': len(hits), \
-                                                                   'year': year, 'rating': rating, \
-                                                                   'curr_page': page,'page_count': range(1,page_count+1), 'islast':islast})
+                    return render(request, 'frontend/index.html', {'search_field': search_field, 'search_text': form.cleaned_data['search_text'], 'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': len(hits), 'year': year, 'rating': rating})
                 else:
                     return render(request, 'frontend/index.html', {'error': True, 'message':"Sorry couldn't parse", 'form':form})
             else:
                 return render(request, 'frontend/index.html', {'error': True, 'message':'oops', 'form':form})
-    else:
-        form = SearchForm()
-        return render(request, 'frontend/index.html', {'form': form})
+        else:
+            form = SearchForm()
+            return render(request, 'frontend/index.html', {'form': form})
 
 def classification(request):
     if request.method == "POST":
