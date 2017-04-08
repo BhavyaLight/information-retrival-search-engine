@@ -108,7 +108,9 @@
 {% if  number == 0 or correction %}
 <div class="time-taken">
   <form action="/crawl">
-    <input type="hidden" value="{{ search_field }}" name="search_field">
+    {% for field in search_field %}
+    <input type="hidden" value="{{ field }}" name="search_field">
+    {% endfor %}
     <input type="hidden" value="{{ search_text }}" name="search_text">
     <h5>Sorry could not find anything...<input type="submit" class="suggested-spelling" value="crawl" ></h5>
   </form>
