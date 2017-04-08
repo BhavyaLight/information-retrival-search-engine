@@ -344,23 +344,8 @@ class Classification(object):
         #print predicted_genre
         
         #Return predicted genre and time taken for classification
-        return predicted_genre, str(round(time.clock() - time0, 3)) + " seconds"    def get_classification_results(self):
-        """
-        This functions returns a data structure containing the results of classification
-        """
-        try:
-            path = os.getcwd() + "/model_files/"
-            #path = "/mnt/d/model_files_new_with_voting_with_weights/"
-            results = joblib.load(path + "classification_results.txt")
-            return results
-        
-        #Call Classify_Data() if results are not found
-        except EOFError as eoferror:
-            print ("Classification results not found. Generating results...")
-            return self.Classify_Data()
-        except IOError as ioerror:
-            print ("Classification results not found. Generating results...")
-            return self.Classify_Data()
+        return predicted_genre, str(round(time.clock() - time0, 3)) + " seconds"
+
 
     def get_classification_results(self):
         """
