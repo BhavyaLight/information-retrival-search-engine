@@ -57,7 +57,13 @@
           <img alt="Poster not available" src="http://image.tmdb.org/t/p/w780/{{hit.poster_path}}" height="200px">
         </div>
         <div class="col-xs-9">
-          <h3 class="hit-title">{{ hit.title }}</h3>
+          <form action="/show" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{hit.title}}" name="title">
+            <input type="hidden" value="{{hit.overview}}" name="overview">
+            <input type="hidden" value="{{hit.poster_path}}" name="poster_path">
+          <h3 class="hit-title"><input type="submit" class="suggested-spelling" value="{{ hit.title }}" >{{ hit.title }}</h3>
+          </form>
           <div class="row">
             <div class="col-xs-2">
               <h5 class="hit-voting"><b>Ratings: </b>{{ hit.vote_average }} </h5>

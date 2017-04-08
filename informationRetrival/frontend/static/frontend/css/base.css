@@ -8,9 +8,15 @@ body {
   background-image: url("../images/background.jpg");
 }
 
-.classification-result{
+.classification-result {
   background: rgba(255, 255, 255, 0.9);
 }
+
+.show-movie {
+  background: rgba(255, 255, 255, 0.9);
+  margin-top: 40px;
+}
+
 .main-search {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 1px;

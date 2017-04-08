@@ -15,6 +15,12 @@ WRITE_FILE = '/Users/bhavyachandra/Desktop/Trial_2'
 CLASSIFICATION_PATH = '/Users/bhavyachandra/Desktop/model_files_new_with_voting_with_weights/'
 
 
+def show(request):
+    if request.method == 'POST':
+        overview = request.POST.get('overview')
+        title = request.POST.get('title')
+        poster_path = request.POST.get('poster_path')
+        return render(request, 'frontend/show.html', {'overview': overview, 'title': title, 'poster_path': poster_path})
 
 def index(request):
     if request.method == 'GET':
