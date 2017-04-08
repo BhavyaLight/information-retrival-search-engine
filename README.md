@@ -192,6 +192,7 @@ The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring doc
 #### Build a simple Web interface for the search engine 
 The movie search engine allows users to select whether they want to search from movie titles, movie overviews or both. 
 The time taken to find the best results, ranked according to the tf-idf score, and the number of results is displayed along with the top results. These can be further filtered by providing a range of release year and rating of the movie. All the results are paginated and displayed with their poster, overview and title and one page displays 5 movies. The effect of filtering using the release year and rating can be seen by checkng the number of results found. 
+![Ui-image](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/UI%20sample.png)
 
 #### Question 2.2
 #### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)  
