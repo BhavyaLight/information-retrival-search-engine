@@ -7,17 +7,8 @@ import whoosh.query as QRY
 import time
 from datetime import datetime
 from classification.classify import Classification
-# def paginate(request):
-#     page = request.GET.get('page')
-#     try:
-#         return render(request, 'results/index.html', {'error': False, 'hits': hits, 'form':form, 'elapsed': elapsed_time, 'number': length})
-#     except PageNotAnInteger:
-#         # If page is not an integer, deliver first page.
-#         movies = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range (e.g. 9999), deliver last page of results.
-#         contacts = paginator.page(paginator.num_pages)
-#     return render(request, 'frontend/results.html', {'movies': movies})
+
+CLASSIFICATION_PATH = '/Users/bhavyachandra/Desktop/model_files_new_with_voting_with_weights/'
 
 def index(request):
     if request.method == 'POST':
@@ -71,7 +62,7 @@ def classification(request):
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
-            genre, time = Classification().Classify_Text(plot)
+            genre, time = Classification(CLASSIFICATION_PATH).Classify_Text(plot)
             return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
