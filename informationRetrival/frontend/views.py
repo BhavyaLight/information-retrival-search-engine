@@ -72,7 +72,7 @@ def classification(request):
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
             genre, time = classify().classify_on(plot)
-            
+
             return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
