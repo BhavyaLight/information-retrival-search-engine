@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from .forms import SearchForm, ClassifyForm
-from whoosh.qparser import QueryParser
+from whoosh.qparser import MultifieldParser
 from whoosh import index as i
 from whoosh import scoring
 import whoosh.query as QRY
 import time
 from datetime import datetime
+from classification.classify import Classification
 
+CLASSIFICATION_URL = "/Users/bhavyachandra/Desktop/model_files_new_with_voting_with_weights/"
 # def paginate(request):
 #     page = request.GET.get('page')
 #     try:
@@ -32,18 +34,18 @@ def index(request):
             # print (rating)
             # print (year)
             # TODO: Change Directory here
-            ix = i.open_dir('/Users/noopurjain/Desktop/index')
+            ix = i.open_dir('/Users/bhavyachandra/Desktop/Index')
             start_time = time.time()
             if query is not None and query != u"":
-                parser = QueryParser(search_field, schema=ix.schema)
+                parser = MultifieldParser(search_field, schema=ix.schema)
                 if year!=None and rating!=None:
                     date_q = QRY.DateRange("release_date", datetime.strptime(year.split(",")[0], "%Y"),\
                                             datetime.strptime(year.split(",")[1], "%Y"))
-                    rating_q = QRY.NumericRange("vote_average",0, int(rating))
+                    rating_q = QRY.NumericRange("vote_average",int(rating.split(",")[0]), int(rating.split(",")[1]))
                     filter_q = QRY.Require(date_q, rating_q)
                 else:
                     year = "1970,2017"
-                    rating = 5
+                    rating = "2,8"
                 try:
                     qry = parser.parse(query)
                 except:
@@ -67,12 +69,13 @@ def index(request):
             return render(request, 'frontend/index.html', {'form': form})
 
 def classification(request):
+    results = Classification(CLASSIFICATION_URL).get_classification_results()
     if request.method == "POST":
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
-            genre, time = classify().classify_on(plot)
-            return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
+            genre, time = Classification(CLASSIFICATION_URL).Classify_Text(plot)
+            return render(request, 'frontend/classify.html', {'results': results, 'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
     else:

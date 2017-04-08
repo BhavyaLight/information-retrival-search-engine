@@ -7,3 +7,4 @@ urlpatterns = [
     url(r'^classify$', views.classification, name='classify'),
     url(r'^crawl', views.crawl),
 ]
+
