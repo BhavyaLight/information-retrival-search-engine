@@ -16,11 +16,7 @@
 
   {% if correction %}
   <div class="suggested-corrections">
-    <form action="">
-      <input type="hidden" value="{{search_field}}" name="search_field">
-      <input type="hidden" value="{{suggested}}" name="search_text">
-      <h4>Did you mean <input class="suggested-spelling" type="submit" value="{{suggested}}" > ?</h4>
-    </form>
+    <h4>Did you mean <a href="/?search_text={{suggested}}{% for field in search_field %}&search_field={{field}}{% endfor %}">{{suggested}}</a>?</h4>
   </div>
   {% endif %}
 
@@ -30,8 +26,6 @@
   </div>
   <div class="row">
   <div class="search-filters col-lg-3">
-      <!-- <input type="hidden" value="{{search_field}}" name="search_field">
-      <input type="hidden" value="{{search_text}}" name="search_text"> -->
       Filter by year interval:<br/>
       <b>1970</b>
       <input id="year-slider" type="text" class="span2" name="year" value=""
@@ -69,7 +63,7 @@
       </div>
     </div>
     {% endfor %}
-    <!-- <nav align="center" aria-label="Page navigation">
+    <nav align="center" aria-label="Page navigation">
     <ul class="pagination">
       <li>
         <a href="#" aria-label="Previous">
@@ -87,7 +81,7 @@
         </a>
       </li>
     </ul>
-    </nav> -->
+    </nav>
     </div>
   </div>
   </form>
