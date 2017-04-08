@@ -40,10 +40,11 @@
       <b>2017</b>
       <br/>
       Filter by Rating: <br/>
-      <input id="rating-slider" name="rating" type="text" data-provide="slider" data-slider-min="1"
-       data-slider-max="10" data-slider-value={{ rating }} data-slider-ticks="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-       data-slider-ticks-labels='["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]'
-       data-slider-tooltip="hide" />
+      <b>0</b>
+      <input id="rating-slider" type="text" class="span2" name="rating" value=""
+       data-slider-min="0" data-slider-max="10" data-slider-step="1"
+       data-slider-value="[{{ rating }}]"/>
+      <b>10</b>
       <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
   </div>
   <div class="col-lg-9">

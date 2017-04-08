@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import SearchForm, ClassifyForm
-from whoosh.qparser import QueryParser
+from whoosh.qparser import MultifieldParser
 from whoosh import index as i
 from whoosh import scoring
 import whoosh.query as QRY
@@ -35,15 +35,15 @@ def index(request):
             ix = i.open_dir('/Users/noopurjain/Desktop/index')
             start_time = time.time()
             if query is not None and query != u"":
-                parser = QueryParser(search_field, schema=ix.schema)
+                parser = MultifieldParser(search_field, schema=ix.schema)
                 if year!=None and rating!=None:
                     date_q = QRY.DateRange("release_date", datetime.strptime(year.split(",")[0], "%Y"),\
                                             datetime.strptime(year.split(",")[1], "%Y"))
-                    rating_q = QRY.NumericRange("vote_average",0, int(rating))
+                    rating_q = QRY.NumericRange("vote_average",int(rating.split(",")[0]), int(rating.split(",")[1]))
                     filter_q = QRY.Require(date_q, rating_q)
                 else:
                     year = "1970,2017"
-                    rating = 5
+                    rating = "2,8"
                 try:
                     qry = parser.parse(query)
                 except:
