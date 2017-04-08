@@ -15,6 +15,9 @@
      * [Build a simple web interface](#question-21)
      * [A simple UI for crawling and incremental indexing of new data](#question-22)
      * [Example of 5 queries](#question-23)
+  * [Enhancements](#3-enhancements)
+      * [Query variation](#enhancement-of-search-via-better-indexing)
+      * [Recommendation system] (#recommendation-system)
 
 ## Overview
 
@@ -214,5 +217,31 @@ _(NOTE: Ideally all records should be added but sometimes, the records fetched f
 
 ## 3 Enhancements
 ### Enhancement of search via better indexing
-### Recommendation system through machiene learning
+#### Query variation 
+_Discussed under Indexing and Querying_   
+
+#### N-grams
+
+The stemming analysis was changed to N-grams, to test for more robust searches ad phrases. The previous queries show more results in almost the same time. After hit and trial, with minsize=2 and maxsize=4 was chosen.
+
+| Query                             | Field searched  | Total results | Total time | Top results                                                                                                   |
+|-----------------------------------|-----------------|---------------|------------|---------------------------------------------------------------------------------------------------------------|
+| A villager prays for his grandson | overview        | 1             | 0.082s     | Promise me this                                                                                               |
+| ghost haunting a house            | overview, title | 17            | 0.035s     | The Ghost of Angela Web, Thirteen Erotic Ghosts, Death of a ghost hunter                                      |
+| boy + girl - love                 | overview, title | 97            | 0.063s     | Puberty Blues, The Pirate Movie, Take a Chance, Summer Camp Nightmare                                         |
+| serial killer and a detective     | overview, title | 31            | 0.034s     | Frankenstein, 10 to Midnight, Detective Story                                                                 |
+| the princess and prince           | overview, title | 141           | 0.04 sec   | Princess protection program, Sinbad and the Eye of the Tiger, The Adventures of Prince Achmed, The Wild Swans |
+
+It is seen that in most cases a textual query longer than 5-6 words usually yields no results with our earlier analyzer. However, after implemntation of the N-grams analyzer the search becomes more responsive to longer user queries.
+
+##### Taking a closer look 
+
+- Example 1
+`a ghost in the shell` returns 7 records with N-grams while previous analyser returns only 5. The two different records were: Frankenstein and Edison's Frankenstein where N-grams was catching the name of the author 'Shelley'. Needless to say, it was also the lowest ranked result. 
+- Example 2
+`Eat` returned 3797 records with N-grams. However, it included terms like 'Death, 'Kreator' etc. which were not the focus of the user's search. The normal indexer returned only 19 relevsnt records.
+
+Thus, we conclude that N-grams is very powerful in detecting terms similar to user queries, particularly helpful in running longer queries.However it may return misleading results for short, one-word queries as can be seen the the above examples.
+
+### Recommendation system
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
