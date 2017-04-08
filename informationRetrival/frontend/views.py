@@ -6,6 +6,7 @@ from whoosh import scoring
 import whoosh.query as QRY
 import time
 from datetime import datetime
+from classification.classify import Classification
 
 # def paginate(request):
 #     page = request.GET.get('page')
@@ -67,15 +68,16 @@ def index(request):
             return render(request, 'frontend/index.html', {'form': form})
 
 def classification(request):
+    results = Classification().get_classification_results();
+    print results;
     if request.method == "POST":
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
-            genre, time = classify().classify_on(plot)
-
-            return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
+            genre, time = Classification().classify_on(plot)
+            return render(request, 'frontend/classify.html', {'results': results, 'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
     else:
         form = ClassifyForm()
-        return render(request, 'frontend/classify.html', {'form': form})
+        return render(request, 'frontend/classify.html', {'results': results, 'form': form})
