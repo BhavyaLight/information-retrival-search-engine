@@ -244,6 +244,17 @@ It is seen that in most cases a textual query longer than 5-6 words usually yiel
 Thus, we conclude that N-grams is very powerful in detecting terms similar to user queries, particularly helpful in running longer queries.However it may return misleading results for short, one-word queries as can be seen the the above examples.
 
 ### Recommendation system
-We build a recommendation system based on the tf-idf matching values between a document and the others instead of user query to get a recommendation system. The recommendation system was explored in two parts: Raw recommendation system and through bag of words classification model in Whoosh.
+
+
+We built a recommendation system based on the tf-idf matching values between a document and the others instead of user query to get a recommendation system. The recommendation system was explored in two parts: Raw recommendation system and through bag of words classification model in Whoosh.
+
+We tried to build a recommendation system that would recommend movies similar to a given movie based on the similarity of movie plots.
+
+We first pre-processed each movie plot by removing punctuation and stopwords, and then extracted the noun phrases from each document( to remove terms like according etc.). Each document was then converted to a tf-idf vector and stored in a dictionary along with the document id. 
+
+The cosine similarity for each pair of document ids was then calculated and put into a new dictionary. We then implemented a function that went through each pair of id's for a given id to find the document with the most similar plot.
+
+However, we noticed that the time for creating the cosine similarity matrix was extremely long and did not support our additional feature of incremental crawling, based on which we used the bag of words classification model in Whoosh.
+
 ![RecommendationSystem](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/Recom.png)
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
