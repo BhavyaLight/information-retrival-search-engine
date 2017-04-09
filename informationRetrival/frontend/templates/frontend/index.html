@@ -3,9 +3,10 @@
 {% block content %}
   <div class="main-search">
     <h1>Discover A Movie</h1>
-    <form action="">
+    <form action="/?">
         {{ form }}
         <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Search</button>
+    </form>
   </div>
 
   {% if error %}
@@ -14,13 +15,10 @@
   </div>
   {% endif %}
 
+  {% block crawl %} {% endblock crawl%}
   {% if correction %}
   <div class="suggested-corrections">
-    <form action="">
-      <input type="hidden" value="{{search_field}}" name="search_field">
-      <input type="hidden" value="{{suggested}}" name="search_text">
-      <h4>Did you mean <input class="suggested-spelling" type="submit" value="{{suggested}}" > ?</h4>
-    </form>
+    <h4>Did you mean <a href="/?search_text={{suggested}}{% for field in search_field %}&search_field={{field}}{% endfor %}">{{suggested}}</a>?</h4>
   </div>
   {% endif %}
 
@@ -30,8 +28,11 @@
   </div>
   <div class="row">
   <div class="search-filters col-lg-3">
-      <!-- <input type="hidden" value="{{search_field}}" name="search_field">
-      <input type="hidden" value="{{search_text}}" name="search_text"> -->
+    <form action="">
+      <input type="hidden" value="{{ search_text }}" name="search_text">
+      {% for field in search_field %}
+      <input type="hidden" value="{{ field }}" name="search_field">
+      {% endfor %}
       Filter by year interval:<br/>
       <b>1970</b>
       <input id="year-slider" type="text" class="span2" name="year" value=""
@@ -46,6 +47,7 @@
        data-slider-value="[{{ rating }}]"/>
       <b>10</b>
       <button class="btn btn-default" type="submit" value="Search"> <span class="glyphicon glyphicon-search"></span> Refine </button>
+    </form>
   </div>
   <div class="col-lg-9">
     {% for hit in hits %}
@@ -55,7 +57,14 @@
           <img alt="Poster not available" src="http://image.tmdb.org/t/p/w780/{{hit.poster_path}}" height="200px">
         </div>
         <div class="col-xs-9">
-          <h3 class="hit-title">{{ hit.title }}</h3>
+          <form action="/show" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{hit.title}}" name="title">
+            <input type="hidden" value="{{hit.overview}}" name="overview">
+            <input type="hidden" value="{{hit.poster_path}}" name="poster_path">
+            <input type="hidden" value="{{hit.imdb_id}}" name="imdb_id">
+          <h3 class="hit-title"><input type="submit" class="movie-title" value="{{ hit.title }}" ></h3>
+          </form>
           <div class="row">
             <div class="col-xs-2">
               <h5 class="hit-voting"><b>Ratings: </b>{{ hit.vote_average }} </h5>
@@ -69,27 +78,51 @@
       </div>
     </div>
     {% endfor %}
-    <!-- <nav align="center" aria-label="Page navigation">
-    <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li>
-        <a href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
+    <!--<nav align="center" aria-label="Page navigation">-->
+    <!--<ul class="pagination">-->
+      <!--{% if page == 1 %}-->
+        <!--<li>-->
+        <!--<a class="disabled" aria-label="Previous">-->
+          <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% else %}-->
+      <!--<li>-->
+        <!--<a href="/1" aria-label="Previous">-->
+          <!--<span aria-hidden="true">&laquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% endif %}-->
+      <!--{% for i in page_count %}-->
+      <!--{% if page == i %}-->
+      <!--<li><a class="active">{{ i }} </a></li>-->
+      <!--{% else %}-->
+      <!--<li><a href="?page={{ i }}">{{ i }} </a></li>-->
+      <!--{% endif %}-->
+      <!--{% if islast %}-->
+      <!--<li>-->
+        <!--<a href="/1" aria-label="Next">-->
+          <!--<span aria-hidden="true">&raquo;</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--{% endif %}-->
+      <!--{% endfor %}-->
     </ul>
-    </nav> -->
+    </nav>
     </div>
   </div>
+{% endif %}
+{% if  number == 0 or correction %}
+<div class="time-taken">
+  <form action="/crawl">
+    {% for field in search_field %}
+    <input type="hidden" value="{{ field }}" name="search_field">
+    {% endfor %}
+    <input type="hidden" value="{{ search_text }}" name="search_text">
+    <h5>Sorry could not find anything...<input type="submit" class="suggested-spelling" value="crawl" ></h5>
   </form>
-  {% endif %}
+</div>
+{% endif %}
 {% endblock content %}
+
+

@@ -1,15 +1,13 @@
 import pickle
-#from unidecode import unidecode
-#pkl_file = open('data.pkl', 'rb')
 encoding="utf8"
 
-overviews=pickle.load(open( "overviews.p", "rb"))
-ids=pickle.load(open( "ids.p", "rb" ))
-overdict=pickle.load(open( "overdict.p", "rb" ),encoding="latin-1")
-iddict=pickle.load(open( "iddict.p", "rb" ))
-iddictinv=pickle.load(open( "iddictinv.p", "rb" ))
+overviews=pickle.load(open( "pickle_files/overviews.p", "rb"))
+ids=pickle.load(open( "pickle_files/ids.p", "rb" ))
+overdict=pickle.load(open( "pickle_files/overdict.p", "rb" )) #, encoding="latin-1")
+iddict=pickle.load(open( "pickle_files/iddict.p", "rb" ))
+iddictinv=pickle.load(open( "pickle_files/iddictinv.p", "rb" ))
 
-cosinesim=pickle.load(open( "cosinesimilarity.p", "rb" ),encoding="latin-1")
+cosinesim=pickle.load(open( "pickle_files/cosinesimilarity.p", "rb" )) #,encoding="latin-1")
 
 # Function takes input as id
 def findsim(i):
