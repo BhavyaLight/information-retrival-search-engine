@@ -39,7 +39,6 @@ class Classification(object):
 
         #Path to folder to store trained data set
         path=self.path
-        
         #Queries to get 500 horror, romance and crime movies
         qr1=collection.find({"genre.name":"Horror"}).limit(500)
         qr2=collection.find({"genre.name":"Romance"}).limit(500)
@@ -64,7 +63,6 @@ class Classification(object):
 
         #Document ids of records to be trained
         doc_ids = []
-        
         for movie in query_results:
         
             training_data.append(movie['overview'])
@@ -179,14 +177,13 @@ class Classification(object):
                
             if i>=100:
                 break
-
         rom=[]
         i=0
         for rec in qr2:
             if rec['_id'] not in trained_docs:
                i=i+1
                rom.append(rec)
- 
+              
             if i>=100:
                 break
 
