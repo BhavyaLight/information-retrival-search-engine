@@ -9,10 +9,12 @@ import pandas as pd
 from datetime import datetime
 from indexing.crawl import crawl_and_update
 from classification.classify import Classification
+from sklearn.externals import joblib
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
-INDEX_FILE = '/Users/bhavyachandra/Desktop/Index_2'
-WRITE_FILE = '/Users/bhavyachandra/Desktop/Trial_2'
-CLASSIFICATION_PATH = '/mnt/d/model_files_new_with_voting_with_weights/'
+INDEX_FILE = '/Users/noopurjain/Desktop/Index'
+WRITE_FILE = '/Users/noopurjain/Desktop/Trial_2'
+CLASSIFICATION_PATH = '/Users/noopurjain/Desktop/model_files/'
 
 
 def show(request):
@@ -77,24 +79,23 @@ def index(request):
 
 
 def classification(request):
-    results_dict = Classification(CLASSIFICATION_PATH).get_classification_results()
+    results_dict = joblib.load("/Users/noopurjain/work/information-retrival-search-engine/informationRetrival/frontend/static/frontend/text/classification_results.txt")
     results = pd.DataFrame(results_dict)
-    
     for column in ['romance','crime','horror']:
         results[column] = results[column].apply(lambda x: str((int(x.split('/')[0]) * 100)/int(x.split('/')[1]))+" %")
-    
+
     results.columns = ['F(1) Score', 'F(W) Score', 'Recall', 'Accuracy', 'Crime', 'Horror', 'Model', 'Precision', 'Romance','Vectorizer']
-    results = results[['Model','Vectorizer', 'Crime', 'Horror', 'Romance', 'F(1) Score', 'F(W) Score', 'Recall', 'Accuracy',   'Precision']]
+    results = results[['Model','Vectorizer', 'Crime', 'Horror', 'Romance', 'F(1) Score', 'F(W) Score', 'Recall', 'Accuracy', 'Precision']]
     results = results.to_html
-    
+
     if request.method == "POST":
         form = ClassifyForm(request.POST)
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
             genre, time = Classification(CLASSIFICATION_PATH).Classify_Text(plot)
-            return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
+            return render(request, 'frontend/classify.html', {'results': results, 'form': form, 'genre': genre[0], 'time': time})
         else:
-            return render(request, 'frontend/classify.html', {'form': form})
+            return render(request, 'frontend/classify.html', {'results': results, 'form': form})
     else:
         form = ClassifyForm()
         return render(request, 'frontend/classify.html', {'results': results, 'form': form})
@@ -118,4 +119,3 @@ def crawl(request):
         else:
             total_records = "Already up-to-date"
         return render(request, 'frontend/crawl.html', {'total_records': total_records, 'form': form})
-
