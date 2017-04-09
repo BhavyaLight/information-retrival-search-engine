@@ -20,8 +20,8 @@
     * [Recommendation system](#recommendation-system)
 * [Classification](#3-classification)
   * [Discussion of Results](#discussion-of-results)
-    * [Evaluation Parameters](#evaluation-parameters)
-    * [Observations and Inference](#observations-and-inference)
+   * [Evaluation Parameters](#evaluation-parameters)
+   * [Observations and Inference](#observations-and-inference)
    
   
 
@@ -267,6 +267,29 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 
 
 ## 3. Classification
+Classification is the process of determining the sub-category to which a new record/observation belongs. In machine learning, classification comes under supervised learning, where a training set of records with correctly identified categories is available. The classification of a new record is done based on this training set.
+Both probabilistic and non-probabilistic classifiers were tested. The simple classifiers used include SVM, the Naïve Bayes classifiers and Logistic Regression. Some ensemble classifiers such as Bagging, Voting and the Random Forrest classifiers, were also used.
+Three genres (categories) – horror, romance and crime were chosen, and a training set of 1500 movie records (500 of each genre) was used as the basis for classification. Around thousand movie records which were manually labelled by the team members, were used to test each classifier.
+
+### Question 4
+#### Motivate the choice of your classification approach in relation with the state of the art
+
+The classification approach chosen was the machine learning based approach. This approach was preferred over rule-based or knowledge based classification because, these approaches are usually adopted when there is scarcity of data, i.e., there isn't enough manually labelled or supervised data available to train a machine-learning based approach. Due to the availability of a large training set with enough labelled data, a statistical machine learning approach is expected to perform better.
+
+From the results obtained, it was observed that the Logistic Regression and the Multinomial Naïve Bayes classifiers outperformed the others simple classifiers in terms of accuracy. The Voting ensemble classifier was the most accurate among all the classifiers.
+
+The best performer was the Multinomial Naïve Bayes classifier. It was almost as accurate as the voting classifier, but much faster.
+
+#### Discuss whether you had to pre-process data and why
+
+The overviews of the movie records were used as the training data. The text in the overviews were pre-processed by converting them to lower case, lemmatizing them and removing the stop words. This was done to avoid the inclusion of irrelevant words in the training set and to increase the speed of training. It was observed that this also improved the accuracy of classification. 
+
+#### Build an evaluation dataset by manually labelling 10% of the collected data (at least 1,000 records) with an inter-annotator agreement of at least 80%
+
+A total of 1000 movie records were used to test the classifiers, and these records were manually labelled. Refer to the attached file test_data.csv.
+
+#### Provide evaluation metrics such as precision, recall, and F-measure and discuss results
+
 
 ### Discussion of Results
 
