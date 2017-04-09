@@ -295,7 +295,7 @@ The overviews of the movie records were used as the training data. The text in t
 
 #### Build an evaluation dataset by manually labelling 10% of the collected data (at least 1,000 records) with an inter-annotator agreement of at least 80%
 
-A total of 1000 movie records were used to test the classifiers, and these records were manually labelled. Refer to the attached file test_data.csv.
+A total of 1000 movie records were used to test the classifiers, and these records were manually labelled. Refer to the attached file IR_evaluation_data.xslx [here](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/IR_evaluation_data.xlsx).
 
 #### Provide evaluation metrics such as precision, recall, and F-measure and discuss results
 ![ClassificationResults](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/classification_results.JPG)
