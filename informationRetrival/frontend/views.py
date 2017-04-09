@@ -14,7 +14,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 INDEX_FILE = '/Users/noopurjain/Desktop/Index'
 WRITE_FILE = '/Users/noopurjain/Desktop/Trial_2'
-CLASSIFICATION_PATH = '/Users/noopurjain/Desktop/model_files/'
+CLASSIFICATION_PATH = '/mnt/d/model_files_new_with_voting_with_weights/'
 
 
 def show(request):
@@ -79,7 +79,7 @@ def index(request):
 
 
 def classification(request):
-    results_dict = joblib.load("/Users/noopurjain/work/information-retrival-search-engine/informationRetrival/frontend/static/frontend/text/classification_results.txt")
+    results_dict = Classification(CLASSIFICATION_PATH).get_classification_results()
     results = pd.DataFrame(results_dict)
     for column in ['romance','crime','horror']:
         results[column] = results[column].apply(lambda x: str((int(x.split('/')[0]) * 100)/int(x.split('/')[1]))+" %")

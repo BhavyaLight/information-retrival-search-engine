@@ -168,6 +168,7 @@ class Classification(object):
         qr3=collection.find({"genre.name":"Crime"})
         
         #Get 100 Horror, Romance and Crime movies each, which are not in the trained data set
+        
         horr=[]
         i=0
         for rec in qr1:
@@ -196,6 +197,7 @@ class Classification(object):
                
             if i>=334:
                 break
+                
         
 
         #Combine the query results
@@ -291,9 +293,9 @@ class Classification(object):
                 print("________SCORES__________")
                 print("MODEL      :  " + models[i])
                 print("VECTORIZER :  " + vectorizers[j])
-                print("Horror     :  %d/100" % (horror))
-                print("Romance    :  %d/100" % (romance))
-                print("Crime      :  %d/100" % (crime))
+                print("Horror     :  %d/333" % (horror))
+                print("Romance    :  %d/333" % (romance))
+                print("Crime      :  %d/334" % (crime))
                 print("Precision  :  %.5f" % (score[0]))
                 print("Recall     :  %.5f" % (score[1]))
                 print("F(1) Score :  %.5f" % ((score[1] * score[0] / (score[1] + score[0])) * 2))
@@ -304,17 +306,17 @@ class Classification(object):
                 dic={}
                 dic['model']=models[i].title()
                 dic['vectorizer']=vectorizers[j][:-11]
-                dic['horror']=str(horror)+'/'+'100'
-                dic['romance']=str(romance)+'/'+'100'
-                dic['crime']=str(crime)+'/'+'100'
+                dic['horror']=str(horror)+'/'+'333'
+                dic['romance']=str(romance)+'/'+'333'
+                dic['crime']=str(crime)+'/'+'334'
                 dic['precision']=round(score[0], 3)
                 dic['Recall']=round(score[1], 3)
-                dic['F(1) Score']=round(accuracy_score(y_correct, y_predicted), 3)
-                dic['F(W) Score']=round(((score[1] * score[0] / (score[1] + score[0])) * 2), 3)
-                dic['accuracy']=round(score[2], 3)
+                dic['F(1) Score']=round(((score[1] * score[0] / (score[1] + score[0])) * 2), 3)
+                dic['F(W) Score']=round(score[2], 3)
+                dic['accuracy']=round(accuracy_score(y_correct, y_predicted), 3)
                 stats.append(dic)
         #Store stats in file        
-        joblib.dump(stats, path + "classification_results_1000.txt")
+        joblib.dump(stats, path + "classification_results.txt")
 
         print "Done"
         return stats
