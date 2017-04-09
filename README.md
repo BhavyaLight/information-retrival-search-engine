@@ -15,9 +15,10 @@
      * [Build a simple web interface](#question-21)
      * [A simple UI for crawling and incremental indexing of new data](#question-22)
      * [Example of 5 queries](#question-23)
- * [Enhancements](#3-enhancements)
+  * [Enhancements](#3-enhancements)
     * [Query variation](#enhancement-of-search-via-better-indexing)
     * [Recommendation system](#recommendation-system)
+  
 
 ## Overview
 
@@ -260,7 +261,7 @@ However, we noticed that the time for creating the cosine similarity matrix was 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
 
 
-## Classification
+## 3. Classification
 
 ### Discussion of Results
 
