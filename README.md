@@ -258,3 +258,34 @@ However, we noticed that the time for creating the cosine similarity matrix was 
 
 ![RecommendationSystem](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/Recom.png)
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+
+## Classification
+
+### Discussion of Results
+
+### Evaluation Parameters 
+
+In order to evaluate the performance of the different Machine Learning Classifiers, the following scores were calculated:
+1.	Precision: Ratio of true positives to all positive results (including true and false positives)
+2.	Recall: Proportion of correctly identified positives 
+3.	Accuracy: Ratio of true (positive and negative) to the whole test dataset
+4.	F(1) Score: Harmonic Mean of precision and recall: 2*Precision*Recall/(Precision+Recall)
+5.	F(W) Score: F(1) score with more weightage to Precision than Recall
+
+### Observations and Inference
+
+Bayes Classifiers give moderate to good performance. This is due to the fact that Bayes Classifiers are based on the assumption that the documents in the datasets are independent. This assumption is satisfied to a large extend as movie overviews are generally independent of each other. Multinomial NB with tf-idf vectorization gives the best performance in terms of accuracy (Accuracy: 85.70%, F1: 85.84%, FW: 85.75%) compared to all other classifiers as it is based on multinomial distribution and works well for data which can be converted into frequencies or count, with the count of words in documents being the case for this evaluation. Bernoulli performs moderately as it only uses binary vectors representing occurrence of words. Gaussian NB tends to be least accurate as it is based on the premise that the underlying dataset has a continuous normal distribution, which is not the case for the words in documents
+
+For SVM, the performance is reasonably good (Count Vectorizer: 83.7% accuracy and F1 Score, tfidf: 84.8% accuracy and F1 Score). As the documents are multiple dimensional, SVM is effective as SVM plots each document as a point in n-dimensional space as Support Vectors.
+
+For Logistic Regression, as it is uses log functions on binary values to predict the probability of occurrence of words, it gives a good performance as the movie reviews are independent.
+
+Random forest and Bagging also gave decent results, however Gradient performed poorly.
+
+Most of the models tend to perform better with tf-idf vectorizers. Since tf-idf vectorization normalizes the results based of rarity or infrequency of the words, by giving such rare words more weightage, it is able to perform well as different movies overviews have specific key words which are quite specific to its genre
+
+As expected, our enhanced of Ensemble (Voting) perform the best out of all the models. However, the performance improvement is only marginal based on f scores and accuracy which may be due to the averaging out effect. First the classifier with equal weights and then with varying weights. Equal weighted Voting with Count Vectorizer performed the best (Accuracy: 87.00%, F1: 87.03%, FW: 87.01%) out of the lot.
+
+Even though Voting with Count Vectorizer performed the best, it takes significant time to classify (greater than 1s), which would not be appropriate for online real-time classification. Hence we decided to choose the Multinomial NB model as it gives the best individual model performance (second best overall) and significantly less execution time (~0.1 s)
+
