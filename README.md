@@ -19,9 +19,11 @@
     * [Query variation](#enhancement-of-search-via-better-indexing)
     * [Recommendation system](#recommendation-system)
 * [Classification](#3-classification)
+  * [Question 4](#question-4)
   * [Discussion of Results](#discussion-of-results)
    * [Evaluation Parameters](#evaluation-parameters)
    * [Observations and Inference](#observations-and-inference)
+  * [Question 4](#question-5)
    
   
 
@@ -309,17 +311,15 @@ SVM averaged 19 records per second, while the probabilistic classifiers averaged
 A UI was designed to enable the user to key-in a movie plot. The genre into which the movie is classified, is displayed on the web page.
 
 ![Horror](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/horror.JPG)
+ Classification of the plot of the horror movie - The Ring
+
 
 ![Romance](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/romance.JPG)
+ Classification of the plot of the crime movie – Se7en
+
 
 ![Crime](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/crime.JPG)
-
-### Question 5
-
-#### Explore some innovations for enhancing classification
-
-To enhance classification, ensemble classifiers such as Random Forrest, Bagging, Gradient Boosting, and Voting classifiers were used. From the results, it was observed that the Random Forrest and the Bagging classifiers performed on par with the simple classifiers – Logistic Regression and Multinomial NB, in terms of accuracy. The voting classifier had the highest accuracy among all the classifiers. However, the ensemble classifiers were found to be much slower compared to the simple classifiers. This is because, ensemble classifiers combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness compared to a single estimator.
-
+ Classification of the plot of the romance movie – The Notebook
 
 ### Discussion of Results
 
@@ -347,4 +347,10 @@ Most of the models tend to perform better with tf-idf vectorizers. Since tf-idf 
 As expected, our enhanced of Ensemble (Voting) perform the best out of all the models. However, the performance improvement is only marginal based on f scores and accuracy which may be due to the averaging out effect. First the classifier with equal weights and then with varying weights. Equal weighted Voting with Count Vectorizer performed the best (Accuracy: 87.00%, F1: 87.03%, FW: 87.01%) out of the lot.
 
 Even though Voting with Count Vectorizer performed the best, it takes significant time to classify (greater than 1s), which would not be appropriate for online real-time classification. Hence we decided to choose the Multinomial NB model as it gives the best individual model performance (second best overall) and significantly less execution time (~0.1 s)
+
+### Question 5
+
+#### Explore some innovations for enhancing classification
+
+To enhance classification, ensemble classifiers such as Random Forrest, Bagging, Gradient Boosting, and Voting classifiers were used. From the results, it was observed that the Random Forrest and the Bagging classifiers performed on par with the simple classifiers – Logistic Regression and Multinomial NB, in terms of accuracy. The voting classifier had the highest accuracy among all the classifiers. However, the ensemble classifiers were found to be much slower compared to the simple classifiers. This is because, ensemble classifiers combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness compared to a single estimator.
 
