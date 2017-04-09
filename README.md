@@ -20,8 +20,8 @@
     * [Recommendation system](#recommendation-system)
 * [Classification](#3-classification)
   * [Discussion of Results](#discussion-of-results)
-   * [Evaluation Parameters](#evaluation-parameters)
-   * [Observations and Inference](#observations-and-inference)
+    * [Evaluation Parameters](#evaluation-parameters)
+    * [Observations and Inference](#observations-and-inference)
    
   
 
