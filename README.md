@@ -18,6 +18,11 @@
   * [Enhancements](#3-enhancements)
     * [Query variation](#enhancement-of-search-via-better-indexing)
     * [Recommendation system](#recommendation-system)
+* [Classification](#3-classification)
+  * [Discussion of Results](#discussion-of-results)
+   * [Evaluation Parameters](#evaluation-parameters)
+   * [Observations and Inference](#observations-and-inference)
+   
   
 
 ## Overview
@@ -265,7 +270,7 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 
 ### Discussion of Results
 
-### Evaluation Parameters 
+#### Evaluation Parameters 
 
 In order to evaluate the performance of the different Machine Learning Classifiers, the following scores were calculated:
 1.	Precision: Ratio of true positives to all positive results (including true and false positives)
@@ -274,7 +279,7 @@ In order to evaluate the performance of the different Machine Learning Classifie
 4.	F(1) Score: Harmonic Mean of precision and recall: 2*Precision*Recall/(Precision+Recall)
 5.	F(W) Score: F(1) score with more weightage to Precision than Recall
 
-### Observations and Inference
+#### Observations and Inference
 
 Bayes Classifiers give moderate to good performance. This is due to the fact that Bayes Classifiers are based on the assumption that the documents in the datasets are independent. This assumption is satisfied to a large extend as movie overviews are generally independent of each other. Multinomial NB with tf-idf vectorization gives the best performance in terms of accuracy (Accuracy: 85.70%, F1: 85.84%, FW: 85.75%) compared to all other classifiers as it is based on multinomial distribution and works well for data which can be converted into frequencies or count, with the count of words in documents being the case for this evaluation. Bernoulli performs moderately as it only uses binary vectors representing occurrence of words. Gaussian NB tends to be least accurate as it is based on the premise that the underlying dataset has a continuous normal distribution, which is not the case for the words in documents
 
