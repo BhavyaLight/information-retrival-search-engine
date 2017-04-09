@@ -296,7 +296,6 @@ A total of 1000 movie records were used to test the classifiers, and these recor
 The confusion matrix for the Multinomial Naïve Bayes classifier is shown below. The rows indicate the actual genre of the movie record and the columns are the genres into which they are classified.
 
 | Confusion Matrix | Horror | Romance | Crime |
-                         |
 |------------------|--------|---------|-------|
 | Horror	          |   280	 |    22	  |   31  |
 | Romance          |   28	  |   276	  |   29  |
@@ -305,13 +304,26 @@ The confusion matrix for the Multinomial Naïve Bayes classifier is shown below.
 When it came to the number of records classified per second, the ensemble classifiers were much slower compared to the simple classifiers. Among the simple classifier, the non-probabilistic classifier – SVM was much slower compared to the probabilistic classifiers.
 SVM averaged 19 records per second, while the probabilistic classifiers averaged around 1750 records per second. The voting ensemble classifier averaged around 15 records per second.
 
+#### A simple UI for visualizing classified data would be a bonus (but not compulsory)
+
+A UI was designed to enable the user to key-in a movie plot. The genre into which the movie is classified, is displayed on the web page.
+
+![Horror](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/horror.JPG)
+
+![Romance](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/romance.JPG)
+
+![Crime](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/crime.JPG)
+
+### Question 5
+
+#### Explore some innovations for enhancing classification
+
+To enhance classification, ensemble classifiers such as Random Forrest, Bagging, Gradient Boosting, and Voting classifiers were used. From the results, it was observed that the Random Forrest and the Bagging classifiers performed on par with the simple classifiers – Logistic Regression and Multinomial NB, in terms of accuracy. The voting classifier had the highest accuracy among all the classifiers. However, the ensemble classifiers were found to be much slower compared to the simple classifiers. This is because, ensemble classifiers combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness compared to a single estimator.
 
 
 ### Discussion of Results
 
-#### EvaluatioWhen it came to the number of records classified per second, the ensemble classifiers were much slower compared to the simple classifiers. Among the simple classifier, the non-probabilistic classifier – SVM was much slower compared to the probabilistic classifiers.
-SVM averaged 19 records per second, while the probabilistic classifiers averaged around 1750 records per second. The voting ensemble classifier averaged around 15 records per second.
-n Parameters 
+#### Evaluation Parameters
 
 In order to evaluate the performance of the different Machine Learning Classifiers, the following scores were calculated:
 1.	Precision: Ratio of true positives to all positive results (including true and false positives)
