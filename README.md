@@ -1,5 +1,10 @@
-# Information Retrival Search Engine
-
+# Information Retrieval Search Engine
+## Team Project Members
+- Chandra Bhavya U1322721J
+- Chandrashekhar Srivatsan U1322972L
+- Chhabra Aishwarya U1322996F
+- Raza Yusuf U1322929N
+- Jain Noopur U1323005A
 ## Quick-index to assignment questions
 * [Youtube demonstration video link](https://youtu.be/zUg6zYWUF28)
 * [Why we chose to work on a movie database?](#overview)
@@ -210,7 +215,7 @@ The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring doc
 #### Question 2.1  
 #### Build a simple Web interface for the search engine 
 The movie search engine allows users to select whether they want to search from movie titles, movie overviews or both. 
-The time taken to find the best results, ranked according to the tf-idf score, and the number of results is displayed along with the top results. These can be further filtered by providing a range of release year and rating of the movie. All the results are paginated and displayed with their poster, overview and title and one page displays 5 movies. The effect of filtering using the release year and rating can be seen by checkng the number of results found. 
+The time taken to find the best results, ranked according to the tf-idf score, and the number of results is displayed along with the top results. These can be further filtered by providing a range of release year and rating of the movie. The effect of filtering using the release year and rating can be seen by checkng the number of results found. 
 ![Ui-image](https://cloud.githubusercontent.com/assets/9455527/24838889/637d320e-1d83-11e7-9b40-8e956b87fc9d.png)
 
 #### Question 2.2
@@ -299,7 +304,7 @@ The overviews of the movie records were used as the training data. The text in t
 A total of 1000 movie records were used to test the classifiers, and these records were manually labelled. Refer to the attached file IR_evaluation_data.xslx [here](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/IR_evaluation_data.xlsx).
 
 #### Provide evaluation metrics such as precision, recall, and F-measure and discuss results
-![ClassificationResults](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/classification_results.JPG)
+![ClassificationResults](https://cloud.githubusercontent.com/assets/9455527/24838977/f42fffce-1d84-11e7-85b8-1a1af3d82291.JPG)
 
 #### Discuss performance metrics, e.g., records classified per second, and scalability of the system
 
