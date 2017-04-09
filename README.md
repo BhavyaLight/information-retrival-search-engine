@@ -272,7 +272,6 @@ The cosine similarity for each pair of document ids was then calculated and put 
 However, we noticed that the time for creating the cosine similarity matrix was extremely long and did not support our additional feature of incremental crawling, based on which we used the bag of words classification model in Whoosh.
 
 ![RecommendationSystem](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/Recom.png)
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
 
 
 ## 3. Classification
@@ -318,15 +317,15 @@ SVM averaged 19 records per second, while the probabilistic classifiers averaged
 A UI was designed to enable the user to key-in a movie plot. The genre into which the movie is classified, is displayed on the web page.
 
 ![Horror](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/horror.JPG)
- Classification of the plot of the horror movie - The Ring
+                  Classification of the plot of the horror movie - The Ring
 
 
 ![Romance](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/romance.JPG)
- Classification of the plot of the crime movie – Se7en
+                      Classification of the plot of the crime movie – Se7en
 
 
 ![Crime](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/crime.JPG)
- Classification of the plot of the romance movie – The Notebook
+                  Classification of the plot of the romance movie – The Notebook
 
 ### Discussion of Results
 
@@ -360,4 +359,9 @@ Even though Voting with Count Vectorizer performed the best, it takes significan
 #### Explore some innovations for enhancing classification
 
 To enhance classification, ensemble classifiers such as Random Forrest, Bagging, Gradient Boosting, and Voting classifiers were used. From the results, it was observed that the Random Forrest and the Bagging classifiers performed on par with the simple classifiers – Logistic Regression and Multinomial NB, in terms of accuracy. The voting classifier had the highest accuracy among all the classifiers. However, the ensemble classifiers were found to be much slower compared to the simple classifiers. This is because, ensemble classifiers combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness compared to a single estimator.
+
+
+
+
+Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
 
