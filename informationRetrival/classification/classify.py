@@ -159,7 +159,7 @@ class Classification(object):
         
         #Get the list of doc ids trained
         trained_docs=[]
-        myfile = open(r'doc_ids.pkl', 'rb')
+        myfile = open(r'/mnt/d/model_files_new_with_voting_with_weights/doc_ids.txt', 'rb')
         trained_docs=pickle.load(myfile)
 
         #Mongo queries to retrieve Horror, Romance and Crime movies
@@ -175,7 +175,7 @@ class Classification(object):
                i=i+1
                horr.append(rec)
                
-            if i>=100:
+            if i>=333:
                 break
         rom=[]
         i=0
@@ -184,7 +184,7 @@ class Classification(object):
                i=i+1
                rom.append(rec)
               
-            if i>=100:
+            if i>=333:
                 break
 
         crime=[]
@@ -194,8 +194,9 @@ class Classification(object):
                i=i+1
                crime.append(rec)
                
-            if i>=100:
+            if i>=334:
                 break
+        
 
         #Combine the query results
         query_results=[]
@@ -239,6 +240,7 @@ class Classification(object):
         #Generate results
         for i in range(0, len(models)):
             for j in range(0, len(vectorizers)):
+                time0=time.clock()
                 model = joblib.load(path + models[i] + "_" + vectorizers[j].replace('-', '') + ".pkl")
                 vec = vec_list[j]
                 Y = vec.fit_transform(test_data).toarray()
@@ -285,6 +287,7 @@ class Classification(object):
 
                 #Print results
                 score = precision_recall_fscore_support(y_correct, y_predicted, average='weighted')
+                #print("Number of records classified per second = %d" % (round((1000/(time.clock()-time0)),3)))
                 print("________SCORES__________")
                 print("MODEL      :  " + models[i])
                 print("VECTORIZER :  " + vectorizers[j])
@@ -296,6 +299,7 @@ class Classification(object):
                 print("F(1) Score :  %.5f" % ((score[1] * score[0] / (score[1] + score[0])) * 2))
                 print("F(W) Score :  %.5f" % (score[2]))
                 print("Accuracy   :  %.5f" % accuracy_score(y_correct, y_predicted))
+                #print(confusion_matrix(y_correct, y_predicted))
                 
                 dic={}
                 dic['model']=models[i].title()
@@ -310,7 +314,7 @@ class Classification(object):
                 dic['accuracy']=round(score[2], 3)
                 stats.append(dic)
         #Store stats in file        
-        joblib.dump(stats, path + "classification_results.txt")
+        joblib.dump(stats, path + "classification_results_1000.txt")
 
         print "Done"
         return stats
@@ -330,7 +334,7 @@ class Classification(object):
         time0 = time.clock()
 
         #Use ensemble classifier - voting with weights
-        model = joblib.load(path + "Voting With Weights_TFIDF VECTORIZER" + ".pkl")
+        model = joblib.load(path + "MULTINOMIAL NB_TFIDF VECTORIZER" + ".pkl")
         dictionary = joblib.load(path + "_Genre_Dictionary")
         vec = feature_extraction.text.CountVectorizer(vocabulary=dictionary)
         Y = vec.fit_transform([overview]).toarray()
@@ -360,7 +364,7 @@ class Classification(object):
 
 
 
-#path=os.getcwd()+'/model_files/'
+#path='/mnt/d/model_files_new_with_voting_with_weights/'
 #c = Classification(path)
 #c.Train()
 #c.Classify_Data()
