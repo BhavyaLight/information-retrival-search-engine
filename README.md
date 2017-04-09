@@ -15,9 +15,9 @@
      * [Build a simple web interface](#question-21)
      * [A simple UI for crawling and incremental indexing of new data](#question-22)
      * [Example of 5 queries](#question-23)
-  * [Enhancements](#3-enhancements)
-      * [Query variation](#enhancement-of-search-via-better-indexing)
-      * [Recommendation system](#recommendation-system)
+ * [Enhancements](#3-enhancements)
+    * [Query variation](#enhancement-of-search-via-better-indexing)
+    * [Recommendation system](#recommendation-system)
 
 ## Overview
 
