@@ -289,7 +289,7 @@ The overviews of the movie records were used as the training data. The text in t
 A total of 1000 movie records were used to test the classifiers, and these records were manually labelled. Refer to the attached file test_data.csv.
 
 #### Provide evaluation metrics such as precision, recall, and F-measure and discuss results
-![ClassificationResults](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/classification_results.jpg)
+![ClassificationResults](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/classification%_results.jpg)
 
 ### Discussion of Results
 
