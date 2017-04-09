@@ -291,9 +291,27 @@ A total of 1000 movie records were used to test the classifiers, and these recor
 #### Provide evaluation metrics such as precision, recall, and F-measure and discuss results
 ![ClassificationResults](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/classification_results.JPG)
 
+#### Discuss performance metrics, e.g., records classified per second, and scalability of the system
+
+The confusion matrix for the Multinomial Naïve Bayes classifier is shown below. The rows indicate the actual genre of the movie record and the columns are the genres into which they are classified.
+
+| Confusion Matrix | Horror | Romance | Crime |
+                         |
+|------------------|--------|---------|-------|
+| Horror	          |   280	 |    22	  |   31  |
+| Romance          |   28	  |   276	  |   29  |
+| Crime	           |   17	  |    16	  |  301  |
+
+When it came to the number of records classified per second, the ensemble classifiers were much slower compared to the simple classifiers. Among the simple classifier, the non-probabilistic classifier – SVM was much slower compared to the probabilistic classifiers.
+SVM averaged 19 records per second, while the probabilistic classifiers averaged around 1750 records per second. The voting ensemble classifier averaged around 15 records per second.
+
+
+
 ### Discussion of Results
 
-#### Evaluation Parameters 
+#### EvaluatioWhen it came to the number of records classified per second, the ensemble classifiers were much slower compared to the simple classifiers. Among the simple classifier, the non-probabilistic classifier – SVM was much slower compared to the probabilistic classifiers.
+SVM averaged 19 records per second, while the probabilistic classifiers averaged around 1750 records per second. The voting ensemble classifier averaged around 15 records per second.
+n Parameters 
 
 In order to evaluate the performance of the different Machine Learning Classifiers, the following scores were calculated:
 1.	Precision: Ratio of true positives to all positive results (including true and false positives)
