@@ -12,7 +12,7 @@ from classification.classify import Classification
 
 INDEX_FILE = '/Users/bhavyachandra/Desktop/Index_2'
 WRITE_FILE = '/Users/bhavyachandra/Desktop/Trial_2'
-CLASSIFICATION_PATH = '/Users/bhavyachandra/Desktop/model_files_new_with_voting_with_weights/'
+CLASSIFICATION_PATH = '/mnt/d/model_files_new_with_voting_with_weights/'
 
 
 def show(request):
@@ -79,10 +79,12 @@ def index(request):
 def classification(request):
     results_dict = Classification(CLASSIFICATION_PATH).get_classification_results()
     results = pd.DataFrame(results_dict)
+    
     for column in ['romance','crime','horror']:
-        results[column] = results[column].apply(lambda x: x.split('/')[0]+" %")
-    results.columns = ['F(1) Score', 'F(W) Score', 'Recall', 'Accuracy', 'Crime', 'Horror', 'Model', 'Precision', 'Romance']
-    results = results[['Model', 'Crime', 'Horror', 'Romance', 'F(1) Score', 'F(W) Score', 'Recall', 'Accuracy',   'Precision']]
+        results[column] = results[column].apply(lambda x: str((int(x.split('/')[0]) * 100)/int(x.split('/')[1]))+" %")
+    
+    results.columns = ['F(1) Score', 'F(W) Score', 'Recall', 'Accuracy', 'Crime', 'Horror', 'Model', 'Precision', 'Romance','Vectorizer']
+    results = results[['Model','Vectorizer', 'Crime', 'Horror', 'Romance', 'F(1) Score', 'F(W) Score', 'Recall', 'Accuracy',   'Precision']]
     results = results.to_html
     
     if request.method == "POST":
@@ -90,7 +92,7 @@ def classification(request):
         if form.is_valid():
             plot = form.cleaned_data['classify_plot']
             genre, time = Classification(CLASSIFICATION_PATH).Classify_Text(plot)
-            return render(request, 'frontend/classify.html', {'results': resultdf, 'form': form, 'genre': genre[0], 'time': time})
+            return render(request, 'frontend/classify.html', {'form': form, 'genre': genre[0], 'time': time})
         else:
             return render(request, 'frontend/classify.html', {'form': form})
     else:
