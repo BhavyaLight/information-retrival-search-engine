@@ -13,7 +13,7 @@
      * [How you crawled the corpus?](#question-11)
      * [what kind of information users would like to retreive?](#question-12)
      * [The numbers of records, words, and types (i.e., unique words) in the corpus](#question-13)
-* [Indexing and Query analysis](#1-indexing)
+* [Indexing and Query analysis - why Whoosh?](#2-indexing-and-querying)
   * [Standard indexing vs Stemming analysis vs Query variation](#2-indexing-and-querying)
   * [Modification on user query](#2-querying)
   * [Ranking](#3-ranking)
