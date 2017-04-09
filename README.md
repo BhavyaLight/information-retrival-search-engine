@@ -210,7 +210,7 @@ The choice trade-off was made between `BM25` and `TF_IDF` methods of scoring doc
 #### Build a simple Web interface for the search engine 
 The movie search engine allows users to select whether they want to search from movie titles, movie overviews or both. 
 The time taken to find the best results, ranked according to the tf-idf score, and the number of results is displayed along with the top results. These can be further filtered by providing a range of release year and rating of the movie. All the results are paginated and displayed with their poster, overview and title and one page displays 5 movies. The effect of filtering using the release year and rating can be seen by checkng the number of results found. 
-![Ui-image](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/UI%20sample.png)
+![Ui-image](https://cloud.githubusercontent.com/assets/9455527/24838889/637d320e-1d83-11e7-9b40-8e956b87fc9d.png)
 
 #### Question 2.2
 #### A simple UI for crawling and incremental indexing of new data would be a bonus (but not compulsory)  
@@ -272,7 +272,7 @@ The cosine similarity for each pair of document ids was then calculated and put 
 
 However, we noticed that the time for creating the cosine similarity matrix was extremely long and did not support our additional feature of incremental crawling, based on which we used the bag of words classification model in Whoosh.
 
-![RecommendationSystem](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/Recom.png)
+![RecommendationSystem](https://cloud.githubusercontent.com/assets/9455527/24838927/f145c6c8-1d83-11e7-8968-14028b31e1cc.png)
 
 
 ## 3. Classification
@@ -317,15 +317,15 @@ SVM averaged 19 records per second, while the probabilistic classifiers averaged
 
 A UI was designed to enable the user to key-in a movie plot. The genre into which the movie is classified, is displayed on the web page.
 
-![Horror](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/horror.JPG)
+![Horror](https://cloud.githubusercontent.com/assets/9455527/24838904/8f54cffe-1d83-11e7-83ce-34d42d754475.JPG)
                   Classification of the plot of the horror movie - The Ring
 
 
-![Romance](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/romance.JPG)
+![Romance](https://cloud.githubusercontent.com/assets/9455527/24838899/8b171dfc-1d83-11e7-9a64-050dc4adba67.JPG)
                       Classification of the plot of the crime movie – Se7en
 
 
-![Crime](https://github.com/BhavyaLight/information-retrival-search-engine/blob/gh-pages/crime.JPG)
+![Crime](https://cloud.githubusercontent.com/assets/9455527/24838907/930a234c-1d83-11e7-8436-e14f568341af.JPG)
                   Classification of the plot of the romance movie – The Notebook
 
 ### Discussion of Results
