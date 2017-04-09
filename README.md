@@ -20,10 +20,17 @@
     * [Recommendation system](#recommendation-system)
 * [Classification](#3-classification)
   * [Question 4](#question-4)
+    * [Motivate the choice of your classification approach in relation with the state of the art](#motivate-the-choice-of-your-classification-approach-in-relation-with-the-state-of-the-art)
+    * [Discuss whether you had to pre-process data and why](#discuss-whether-you-had-to-pre-process-data-and-why)
+    * [Build an evaluation dataset by manually labelling 10% of the collected data (at least 1,000 records) with an inter-annotator agreement of at least 80%](#build-an-evaluation-dataset-by-manually-labelling-10-of-the-collected-data-at-least-1000-records-with-an-inter-annotator-agreement-of-at-least-80)
+    * [Provide evaluation metrics such as precision, recall, and F-measure and discuss results](#provide-evaluation-metrics-such-as-precision-recall-and-f-measure-and-discuss-results)
+    * [Discuss performance metrics, e.g., records classified per second, and scalability of the system](#discuss-performance-metrics-eg-records-classified-per-second-and-scalability-of-the-system)
+    * [A simple UI for visualizing classified data would be a bonus (but not compulsory)](#a-simple-ui-for-visualizing-classified-data-would-be-a-bonus-but-not-compulsory)
   * [Discussion of Results](#discussion-of-results)
-   * [Evaluation Parameters](#evaluation-parameters)
-   * [Observations and Inference](#observations-and-inference)
+    * [Evaluation Parameters](#evaluation-parameters)
+    * [Observations and Inference](#observations-and-inference)
   * [Question 5](#question-5)
+    * [Explore some innovations for enhancing classification](#explore-some-innovations-for-enhancing-classification)
    
   
 
