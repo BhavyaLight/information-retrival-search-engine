@@ -230,12 +230,13 @@ _(NOTE: Ideally all records should be added but sometimes, the records fetched f
 | serial killer and a detective                   | overview, title          | 31             | 0.034s   | Copy cat, Frankenstein, 10 to Midnight, Detective Story                                                             |
 | the princess and prince | overview, title         | 25            | 0.04 sec  | Sinbad and the Eye of the Tiger, The Adventures of Prince Achmed, The Wild Swans |
 
-## 3 Enhancements
-### Enhancement of search via better indexing
-#### Query variation 
+### Question 3: Explore some innovations for enhancing the indexing and ranking. Explain why they are important to solve specific problems, illustrated with examples. 
+
+#### Enhancement of search via better indexing
+##### Query variation 
 _Discussed under Indexing and Querying_   
 
-#### N-grams
+##### N-grams
 
 The stemming analysis was changed to N-grams, to test for more robust searches ad phrases. The previous queries show more results in almost the same time. After hit and trial, with minsize=2 and maxsize=4 was chosen.
 
@@ -258,7 +259,7 @@ It is seen that in most cases a textual query longer than 5-6 words usually yiel
 
 Thus, we conclude that N-grams is very powerful in detecting terms similar to user queries, particularly helpful in running longer queries.However it may return misleading results for short, one-word queries as can be seen the the above examples.
 
-### Recommendation system
+#### Recommendation system
 
 
 We built a recommendation system based on the tf-idf matching values between a document and the others instead of user query to get a recommendation system. The recommendation system was explored in two parts: Raw recommendation system and through bag of words classification model in Whoosh.
@@ -279,7 +280,7 @@ Classification is the process of determining the sub-category to which a new rec
 Both probabilistic and non-probabilistic classifiers were tested. The simple classifiers used include SVM, the Naïve Bayes classifiers and Logistic Regression. Some ensemble classifiers such as Bagging, Voting and the Random Forrest classifiers, were also used.
 Three genres (categories) – horror, romance and crime were chosen, and a training set of 1500 movie records (500 of each genre) was used as the basis for classification. Around thousand movie records which were manually labelled by the team members, were used to test each classifier.
 
-### Question 4
+### Question 4: Perform the following tasks:
 #### Motivate the choice of your classification approach in relation with the state of the art
 
 The classification approach chosen was the machine learning based approach. This approach was preferred over rule-based or knowledge based classification because, these approaches are usually adopted when there is scarcity of data, i.e., there isn't enough manually labelled or supervised data available to train a machine-learning based approach. Due to the availability of a large training set with enough labelled data, a statistical machine learning approach is expected to perform better.
@@ -354,9 +355,7 @@ As expected, our enhanced of Ensemble (Voting) perform the best out of all the m
 
 Even though Voting with Count Vectorizer performed the best, it takes significant time to classify (greater than 1s), which would not be appropriate for online real-time classification. Hence we decided to choose the Multinomial NB model as it gives the best individual model performance (second best overall) and significantly less execution time (~0.1 s)
 
-### Question 5
-
-#### Explore some innovations for enhancing classification
+### Question 5: Explore some innovations for enhancing classification. Explain why they are important to solvespecific problems, illustrated with examples.
 
 To enhance classification, ensemble classifiers such as Random Forrest, Bagging, Gradient Boosting, and Voting classifiers were used. From the results, it was observed that the Random Forrest and the Bagging classifiers performed on par with the simple classifiers – Logistic Regression and Multinomial NB, in terms of accuracy. The voting classifier had the highest accuracy among all the classifiers. However, the ensemble classifiers were found to be much slower compared to the simple classifiers. This is because, ensemble classifiers combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness compared to a single estimator.
 
