@@ -1,6 +1,7 @@
 # Information Retrival Search Engine
 
 ## Quick-index to assignment questions
+* [Youtube demonstration video link](https://youtu.be/zUg6zYWUF28)
 * [Why we chose to work on a movie database?](#overview)
 * [Crawling the data](#1-crawling-the-data)
   * [Question 1](#question-1)
